@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092241029258",
+    "project_id": "notednextgen",
+    "storage_bucket": "notednextgen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092241029258:android:9e18cdd775df2b8b9b1573",
+        "android_client_info": {
+          "package_name": "com.example.noted"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092241029258-8g68968btnbcln0s8tf1ihlhedeo7vm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG0O0hrE4qX-Ly_4ns_IfD-q3B6Ay3EVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092241029258-8g68968btnbcln0s8tf1ihlhedeo7vm9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
