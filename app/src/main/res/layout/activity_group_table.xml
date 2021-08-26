@@ -35,6 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:id="@+id/group_table_list_groups_field"
         style="@style/Widget.AppCompat.ListView.Menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,7 +99,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:padding="5dp"
-        android:text="DELETE"
+        android:text="LOG OUT"
         android:textAllCaps="true"
         android:textColor="?attr/textBackground"
         android:textIsSelectable="false"
@@ -124,7 +125,7 @@
         android:clickable="true"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="Choose group!"
+        android:text="Choose a group!"
         android:textAllCaps="false"
         android:textColor="?attr/textBackground"
         android:textSize="30dp"

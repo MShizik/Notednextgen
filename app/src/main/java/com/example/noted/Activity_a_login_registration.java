@@ -29,7 +29,7 @@ public class Activity_a_login_registration extends AppCompatActivity {
 
      EditText password_obj, email_obj, fio_obj;
      TextView email_warn, password_warn, fio_warning, info_obj;
-     String password, email, fio;
+     String password, email, fio, unusual_fio;
 
      Boolean email_check, password_check;
 
@@ -131,6 +131,7 @@ public class Activity_a_login_registration extends AppCompatActivity {
                 password=password_obj.getText().toString();
                 email=email_obj.getText().toString().replace("@","").replace(" ","").replace(".","");
                 fio= fio_obj.getText().toString().replace(" ","");
+                unusual_fio=fio_obj.getText().toString();
                 Username=email;
 
                 if (email.length()<=1){
@@ -177,9 +178,9 @@ public class Activity_a_login_registration extends AppCompatActivity {
                     if (fio.length()>1 && password.length()>1 && email.length()>1 ) {
                         info_obj.setText("");
                         users.child(email).setValue(password);
-                        db.getReference().child(email).child(fio).child("Кто").setValue("Создатель");
-                        db.getReference().child(email).child("Names").child(fio).setValue(" ");
-                        db.getReference().child(email).child("Groups").child("Друзья").setValue(" ");
+                        db.getReference().child(email).child("Аккаунт").child(fio).child("Кто").setValue("Создатель");
+                        db.getReference().child(email).child("Аккаунт").child("Names").child(unusual_fio).setValue(" ");
+                        db.getReference().child(email).child("Groups").child("Аккаунт").setValue(" ");
                         Username=email;
                         startActivity(new Intent(Activity_a_login_registration.this, Activity_users_downloader.class));
                     }

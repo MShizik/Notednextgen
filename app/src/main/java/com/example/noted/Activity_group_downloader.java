@@ -38,19 +38,20 @@ public class Activity_group_downloader extends AppCompatActivity {
         users.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
-//                if (Activity_a_login_registration.Username!=null){
-//                    startActivity(new Intent(Activity_users_downloader.this, Activity_group_downloader.class));
-//                }
-//                else {
-//                    for (DataSnapshot data : snapshot.getChildren()) {
-//
-//                    startActivity(new Intent(Activity_users_downloader.this, Activity_a_login_registration.class));
-//                }
-                for (DataSnapshot data: snapshot.getChildren()){
-                    System.out.println(data.getKey().toString());
-                    user_groups.add(data.getKey().toString());
+
+
+                if (Activity_group_table.chosen_group != null) {
+                    startActivity(new Intent(Activity_group_downloader.this, Activity_people_downloader.class));
+                }
+                else {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        System.out.println(data.getKey().toString());
+                        user_groups.add(data.getKey().toString());
+                        startActivity(new Intent(Activity_group_downloader.this, Activity_group_table.class));
+                    }
                 }
             }
+
 
             @Override
             public void onCancelled( DatabaseError error) {
