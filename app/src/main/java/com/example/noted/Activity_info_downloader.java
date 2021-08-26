@@ -40,7 +40,7 @@ public class Activity_info_downloader extends AppCompatActivity {
 
                     for (DataSnapshot data : snapshot.getChildren()) {
                         System.out.println(data.getKey().toString());
-                        user_info.add(data.getKey().toString());
+                        user_info.add(data.getKey().toString()+":"+"\n"+data.getValue().toString());
                         startActivity(new Intent(Activity_info_downloader.this, Activity_people_table.class));
                     }
                 }
