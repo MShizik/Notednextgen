@@ -65,6 +65,22 @@ public class Activity_group_table extends AppCompatActivity {
             }
         });
 
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity_a_login_registration.Username=null;
+                startActivity(new Intent(Activity_group_table.this, Activity_users_downloader.class));
+
+            }
+        });
+
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent( Activity_group_table.this, Activity_group_add.class));
+            }
+        });
+
 
 
 

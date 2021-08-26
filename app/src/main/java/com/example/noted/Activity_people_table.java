@@ -14,6 +14,10 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Activity_people_table extends AppCompatActivity {
 
     public static String chosen_person;
@@ -25,10 +29,18 @@ public class Activity_people_table extends AppCompatActivity {
     String[] PEOPLE;
     ArrayAdapter<String> adapter_people;
 
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_table);
+
+        auth=FirebaseAuth.getInstance();
+        db=FirebaseDatabase.getInstance();
+        users=db.getReference();
 
         search_obj=findViewById(R.id.people_table_search_field);
         add_btn=findViewById(R.id.people_table_add_group_btn);
@@ -60,8 +72,19 @@ public class Activity_people_table extends AppCompatActivity {
         people_shower.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                chosen_person=Activity_group_downloader.user_groups.get(position).toString();
+                chosen_person=Activity_people_downloader.user_people.get(position).toString();
                 startActivity(new Intent(Activity_people_table.this, Activity_info_downloader.class));
+            }
+        });
+
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                users.child(Activity_a_login_registration.Username).child(Activity_group_table.chosen_group).setValue(null);
+                users.child(Activity_a_login_registration.Username).child("Groups").child(Activity_group_table.chosen_group).setValue(null);
+                Activity_group_table.chosen_group=null;
+                startActivity(new Intent (Activity_people_table.this, Activity_group_downloader.class));
+
             }
         });
     }
