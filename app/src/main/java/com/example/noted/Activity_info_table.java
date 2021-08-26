@@ -14,27 +14,39 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Activity_info_table extends AppCompatActivity {
     public static String chosen_info;
 
     EditText search_obj;
-    Button add_btn, logout_btn;
+    Button add_btn, delete_btn;
     ListView info_shower;
 
     String[] INFO;
     ArrayAdapter<String> adapter_info;
 
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_table);
+        setContentView(R.layout.activity_info_table);
 
-        search_obj=findViewById(R.id.group_table_search_field);
-        add_btn=findViewById(R.id.group_table_add_group_btn);
-        logout_btn=findViewById(R.id.group_table_delete_group_btn);
-        info_shower=findViewById(R.id.group_table_list_groups_field);
+        auth=FirebaseAuth.getInstance();
+        db=FirebaseDatabase.getInstance();
+        users=db.getReference();
 
-        INFO=Activity_info_downloader.user_info.toArray(new String[Activity_group_downloader.user_groups.size()]);
+        search_obj=findViewById(R.id.info_table_search_field);
+        add_btn=findViewById(R.id.info_table_add_info_btn);
+        delete_btn=findViewById(R.id.info_table_delete_info_btn);
+        info_shower=findViewById(R.id.info_table_list_info_field);
+
+        INFO=Activity_info_downloader.user_info.toArray(new String[Activity_info_downloader.user_info.size()]);
         adapter_info=new ArrayAdapter<String>(this, R.layout.custom_list_view, R.id.autoCompleteItems, INFO);
         info_shower.setAdapter(adapter_info);
 
@@ -59,9 +71,20 @@ public class Activity_info_table extends AppCompatActivity {
         info_shower.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                chosen_info=Activity_group_downloader.user_groups.get(position).toString();
+                chosen_info=Activity_info_downloader.user_info.get(position).toString();
                 startActivity(new Intent(Activity_info_table.this, Activity_info_change.class));
             }
         });
+
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                users.child(Activity_a_login_registration.Username).child(Activity_group_table.chosen_group).child(Activity_people_table.chosen_person).setValue(null);
+                users.child(Activity_a_login_registration.Username).child(Activity_group_table.chosen_group).child("Names").child(Activity_people_table.chosen_person).setValue(null);
+                Activity_people_table.chosen_person=null;
+                startActivity(new Intent (Activity_info_table.this, Activity_people_downloader.class));
+            }
+        });
+
     }
 }
