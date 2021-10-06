@@ -37,7 +37,7 @@ public class Activity_people_downloader extends AppCompatActivity {
         users.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
-
+                user_people.clear();
 
                 if (Activity_people_table.chosen_person != null) {
                     startActivity(new Intent(Activity_people_downloader.this, Activity_info_downloader.class));
@@ -45,8 +45,11 @@ public class Activity_people_downloader extends AppCompatActivity {
                 else {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         System.out.println(data.getKey().toString());
-                        user_people.add(data.getKey().toString());
+                        if (!data.getKey().equals("Test")) {
+                            user_people.add(data.getKey().toString());
+                        }
                         startActivity(new Intent(Activity_people_downloader.this, Activity_people_table.class));
+
                     }
                 }
             }

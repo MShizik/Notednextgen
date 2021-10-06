@@ -51,6 +51,8 @@
         android:listSelector="@android:color/transparent"
         android:maxLines="4"
         android:paddingRight="10dp"
+        android:textAllCaps="false"
+        android:capitalize="words"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

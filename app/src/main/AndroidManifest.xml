@@ -11,9 +11,9 @@
         android:theme="@style/Theme.Noted">
         <activity android:name=".Activity_users_downloader">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.USERSDOWNLOADER" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Activity_a_login_registration">
@@ -91,6 +91,15 @@
                 <action android:name="android.intent.action.DOWNLOADGROUP" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LaunchActivity"
+            android:theme="@style/Launchtheme">
+            <intent-filter>
+
+            <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+
             </intent-filter>
         </activity>
 

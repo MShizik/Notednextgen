@@ -10,16 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Activity_a_login_registration extends AppCompatActivity {
 
@@ -49,14 +44,14 @@ public class Activity_a_login_registration extends AppCompatActivity {
         users=db.getReference("Users");
 
         password_obj=findViewById(R.id.registration_password_field);
-        email_obj=findViewById(R.id.registration_email_field);
-        fio_obj=findViewById(R.id.registration_fio_field);
+        email_obj=findViewById(R.id.group_add_field);
+
         login_btn=findViewById(R.id.registration_login_btn);
         signup_btn=findViewById(R.id.registration_sugnup_btn);
         email_warn=findViewById(R.id.registration_email_warning_field);
         password_warn=findViewById(R.id.registration_password_warning_field);
-        fio_warning=findViewById(R.id.registration_fio_warning);
-        info_obj=findViewById(R.id.registration_main_info_field);
+
+        info_obj=findViewById(R.id.add_group_main_field);
 
         email_check=false;
         password_check=false;
@@ -130,8 +125,8 @@ public class Activity_a_login_registration extends AppCompatActivity {
             public void onClick(View v) {
                 password=password_obj.getText().toString();
                 email=email_obj.getText().toString().replace("@","").replace(" ","").replace(".","");
-                fio= fio_obj.getText().toString().replace(" ","");
-                unusual_fio=fio_obj.getText().toString();
+
+
                 Username=email;
 
                 if (email.length()<=1){
@@ -153,15 +148,6 @@ public class Activity_a_login_registration extends AppCompatActivity {
                     password_warn.setText("");
                     info_obj.setText("");
                 }
-                if (fio.length()<=1){
-                    fio_warning.setText("It is required field");
-                    info_obj.setText("Something went wrong!");
-                    info_obj.setTextColor(Color.parseColor("#E2474B"));
-                }
-                else {
-                    fio_warning.setText("");
-                    info_obj.setText("");
-                }
 
                 for (int c=0; c<=Activity_users_downloader.user_names.size()-1; c++){
                     if (USERS[c]==email){
@@ -175,12 +161,10 @@ public class Activity_a_login_registration extends AppCompatActivity {
 
                 }
                 else{
-                    if (fio.length()>1 && password.length()>1 && email.length()>1 ) {
+                    if (password.length()>1 && email.length()>1 ) {
                         info_obj.setText("");
                         users.child(email).setValue(password);
-                        db.getReference().child(email).child("Аккаунт").child(fio).child("Кто").setValue("Создатель");
-                        db.getReference().child(email).child("Аккаунт").child("Names").child(unusual_fio).setValue(" ");
-                        db.getReference().child(email).child("Groups").child("Аккаунт").setValue(" ");
+                        db.getReference().child(email).child("Groups").child("Zero").setValue(" ");
                         Username=email;
                         startActivity(new Intent(Activity_a_login_registration.this, Activity_users_downloader.class));
                     }
@@ -193,13 +177,11 @@ public class Activity_a_login_registration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (email_obj.getText().toString().equals("")==false || password_obj.getText().toString().equals("")==false || fio_obj.getText().toString().equals("")==false) {
+                if (email_obj.getText().toString().equals("")==false || password_obj.getText().toString().equals("")==false) {
                     email_warn.setText("");
                     password_warn.setText("");
-                    fio_warning.setText("");
                     password_obj.setText("");
                     email_obj.setText("");
-                    fio_obj.setText("");
                     int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
                     switch (currentNightMode) {
                         case Configuration.UI_MODE_NIGHT_NO:

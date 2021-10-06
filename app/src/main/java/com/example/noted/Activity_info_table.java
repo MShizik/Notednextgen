@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Activity_info_table extends AppCompatActivity {
-    public static String chosen_info;
+    public static String chosen_category_info, chosen_value_info;
 
     EditText search_obj;
     Button add_btn, delete_btn;
@@ -50,6 +50,7 @@ public class Activity_info_table extends AppCompatActivity {
         adapter_info=new ArrayAdapter<String>(this, R.layout.custom_list_view, R.id.autoCompleteItems, INFO);
         info_shower.setAdapter(adapter_info);
 
+
         search_obj.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,7 +72,8 @@ public class Activity_info_table extends AppCompatActivity {
         info_shower.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                chosen_info=Activity_info_downloader.user_info.get(position).toString();
+                chosen_category_info=Activity_info_downloader.user_category_info.get(position).toString();
+                chosen_value_info=Activity_info_downloader.user_value_info.get(position).toString();
                 startActivity(new Intent(Activity_info_table.this, Activity_info_change.class));
             }
         });
@@ -84,6 +86,15 @@ public class Activity_info_table extends AppCompatActivity {
                 Activity_people_table.chosen_person=null;
                 startActivity(new Intent (Activity_info_table.this, Activity_people_downloader.class));
             }
+        });
+
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_info_table.this, Activity_info_add.class));
+
+            }
+
         });
 
     }

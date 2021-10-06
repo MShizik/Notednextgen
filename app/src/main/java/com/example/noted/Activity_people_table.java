@@ -87,5 +87,12 @@ public class Activity_people_table extends AppCompatActivity {
 
             }
         });
+
+        add_btn.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent (Activity_people_table.this, Activity_people_add.class));
+            }
+        }));
     }
 }
