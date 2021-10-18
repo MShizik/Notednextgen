@@ -100,6 +100,7 @@ public class Activity_people_table extends AppCompatActivity {
         people_table_main_fraze_obj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Activity_group_table.chosen_group=null;
                 startActivity(new Intent(Activity_people_table.this, Activity_group_downloader.class));
             }
         });

@@ -103,6 +103,7 @@ public class Activity_info_table extends AppCompatActivity {
         info_table_main_fraze_obj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Activity_people_table.chosen_person=null;
                 startActivity(new Intent(Activity_info_table.this, Activity_people_downloader.class));
             }
         });
