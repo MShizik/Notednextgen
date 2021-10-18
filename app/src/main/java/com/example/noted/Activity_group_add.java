@@ -25,6 +25,7 @@ public class Activity_group_add extends AppCompatActivity {
     Button add_group_btn;
     EditText group_name_obj;
     TextView group_name_warning_obj;
+    TextView add_group_main_obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class Activity_group_add extends AppCompatActivity {
         add_group_btn=findViewById(R.id.group_add_btn);
         group_name_obj=findViewById(R.id.group_add_field);
         group_name_warning_obj=findViewById(R.id.group_add_warning_field);
+        add_group_main_obj=findViewById(R.id.add_group_main_field);
 
         add_group_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +76,12 @@ public class Activity_group_add extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        add_group_main_obj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_group_add.this, Activity_group_table.class));
             }
         });
 

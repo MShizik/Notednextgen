@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,7 @@ public class Activity_group_table extends AppCompatActivity {
     EditText search_obj;
     Button add_btn, logout_btn;
     ListView groups_shower;
+    TextView group_table_main_fraze_obj;
 
     String[] GROUPS;
     ArrayAdapter<String> adapter_groups;
@@ -34,6 +36,7 @@ public class Activity_group_table extends AppCompatActivity {
         add_btn=findViewById(R.id.group_table_add_group_btn);
         logout_btn=findViewById(R.id.group_table_delete_group_btn);
         groups_shower=findViewById(R.id.group_table_list_groups_field);
+        group_table_main_fraze_obj=findViewById(R.id.group_table_main_fraze);
 
         GROUPS=Activity_group_downloader.user_groups.toArray(new String[Activity_group_downloader.user_groups.size()]);
         adapter_groups=new ArrayAdapter<String>(this, R.layout.custom_list_view, R.id.autoCompleteItems, GROUPS);
@@ -78,6 +81,13 @@ public class Activity_group_table extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent( Activity_group_table.this, Activity_group_add.class));
+            }
+        });
+
+        group_table_main_fraze_obj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_group_table.this, Activity_a_login_registration.class));
             }
         });
 

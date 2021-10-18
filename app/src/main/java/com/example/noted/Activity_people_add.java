@@ -24,7 +24,7 @@ public class Activity_people_add extends AppCompatActivity {
 
     Button add_people_btn;
     EditText people_name_obj;
-    TextView people_name_warning_obj;
+    TextView people_name_warning_obj,add_people_main_obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class Activity_people_add extends AppCompatActivity {
         add_people_btn=findViewById(R.id.people_add_btn);
         people_name_obj=findViewById(R.id.people_add_field);
         people_name_warning_obj=findViewById(R.id.people_add_warning_field);
+        add_people_main_obj=findViewById(R.id.add_people_main_field);
 
         add_people_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +75,13 @@ public class Activity_people_add extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        add_people_main_obj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_people_add.this, Activity_people_table.class));
             }
         });
     }

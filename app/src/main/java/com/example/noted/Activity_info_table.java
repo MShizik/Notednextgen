@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +25,7 @@ public class Activity_info_table extends AppCompatActivity {
     EditText search_obj;
     Button add_btn, delete_btn;
     ListView info_shower;
+    TextView info_table_main_fraze_obj;
 
     String[] INFO;
     ArrayAdapter<String> adapter_info;
@@ -45,6 +47,7 @@ public class Activity_info_table extends AppCompatActivity {
         add_btn=findViewById(R.id.info_table_add_info_btn);
         delete_btn=findViewById(R.id.info_table_delete_info_btn);
         info_shower=findViewById(R.id.info_table_list_info_field);
+        info_table_main_fraze_obj=findViewById(R.id.info_table_main_fraze);
 
         INFO=Activity_info_downloader.user_info.toArray(new String[Activity_info_downloader.user_info.size()]);
         adapter_info=new ArrayAdapter<String>(this, R.layout.custom_list_view, R.id.autoCompleteItems, INFO);
@@ -95,6 +98,13 @@ public class Activity_info_table extends AppCompatActivity {
 
             }
 
+        });
+
+        info_table_main_fraze_obj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_info_table.this, Activity_people_downloader.class));
+            }
         });
 
     }

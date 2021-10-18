@@ -23,7 +23,7 @@ public class Activity_info_add extends AppCompatActivity {
 
     Button add_info_btn;
     EditText info_name_obj,info_category_obj;
-    TextView info_name_warning_obj, info_category_warning_obj;
+    TextView info_name_warning_obj, info_category_warning_obj, add_info_main_obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class Activity_info_add extends AppCompatActivity {
         info_category_obj=findViewById(R.id.info_category_add_field);
         info_name_warning_obj=findViewById(R.id.info_add_warning_field);
         info_category_warning_obj=findViewById(R.id.info_category_add_warning_field);
+        add_info_main_obj=findViewById(R.id.add_info_main_field);
 
         add_info_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,5 +102,12 @@ public class Activity_info_add extends AppCompatActivity {
 
             }
         });
+        add_info_main_obj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_info_add.this, Activity_info_table.class));
+            }
+
+    });
     }
 }
