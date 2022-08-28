@@ -1,22 +1,68 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Noted" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_background</item>
-        <item name="colorPrimaryDark">@color/dark_background</item>
-        <item name="colorAccent">@color/dark_background</item>
-        <item name="background">@color/dark_background</item>
-        <item name="buttonStyle">@color/button_color</item>
-        <item name="textBackground">@color/white_background</item>
-        <item name="textAllCaps">false</item>
-        <item name="editTextBackground">@color/dark_field_stable</item>
-        <item name="editTextColor">@color/dark_field_pressed</item>
-        <item name="colorBackgroundFloating">@color/text_dark_theme_color</item>
-        <item name="carousel_firstView">@color/text_dark_theme_color</item>
-        <!-- Customize your theme here. -->
+    <style name="Theme.Noted" parent="Theme.AppCompat.NoActionBar">
+        <item name = "android:background">@color/dark_background</item>
+    </style>
 
+    <style name = "CustomTextView">
+        <item name = "android:textColor">@color/text_dark_theme_color</item>
+        <item name = "android:textSize">32sp</item>
+        <item name = "android:fontFamily">@font/comic_neue_light</item>
     </style>
-    <style name="Launchtheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splashtheme</item>
+
+    <style name = "CustomTextViewHint" parent = "CustomTextView">
+        <item name = "android:textSize">20sp</item>
     </style>
+
+    <style name = "CustomTextViewTinyHint" parent = "CustomTextViewHint">
+        <item name = "android:textSize">18sp</item>
+        <item name = "android:textColor">@color/hint_dark_theme_color</item>
+    </style>
+
+    <style name = "CustomEditText">
+        <item name = "android:background">@drawable/input_background_dark</item>
+        <item name = "android:paddingTop">5dp</item>
+        <item name = "android:paddingBottom">5dp</item>
+        <item name = "android:paddingLeft">10dp</item>
+        <item name = "android:paddingRight">5dp</item>
+        <item name = "android:textColor">@color/text_dark_theme_color</item>
+        <item name = "android:textSize">32sp</item>
+    </style>
+
+    <style name = "CustomTextButton" parent = "Widget.MaterialComponents.Button.TextButton">
+        <item name = "android:textAllCaps">false</item>
+        <item name = "android:textColor">@color/text_dark_theme_color</item>
+        <item name = "android:textSize">32sp</item>
+        <item name = "android:fontFamily">@font/comic_neue_light</item>
+    </style>
+
+
+    <style name="CustomBorderedButton" parent = "Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_background_dark</item>
+        <item name = "android:padding">10dp</item>
+        <item name = "android:textColor">@color/text_dark_theme_color</item>
+        <item name = "android:textSize">32sp</item>
+        <item name = "android:textAllCaps">false</item>
+        <item name = "android:fontFamily">@font/comic_neue_light</item>
+    </style>
+
+    <style name = "CustomListViewRow">
+        <item name = "android:background">@drawable/list_row_background_dark</item>
+    </style>
+
+    <style name = "CustomImageButton">
+        <item name = "android:src">@drawable/icon_back_dark</item>
+        <item name = "android:background">@color/color_transparent</item>
+    </style>
+
+    <style name = "ImageEditButton">
+        <item name ="android:src">@drawable/icon_edit_dark</item>
+    </style>
+
+    <style name = "ImageDeleteButton">
+        <item name = "android:src">@drawable/icon_delete_dark</item>
+    </style>
+
+
+
 </resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controllers.notes.AddNoteFragment">
+
+
+    <TextView
+        android:id="@+id/add_tv_parent_key"
+        style = "@style/CustomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop = "10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="Default" />
+
+    <TextView
+        android:id="@+id/add_tv_child_key_hint"
+        style="@style/CustomTextViewHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_tv_parent_key"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="95dp"
+        android:text="@string/add_key_hint" />
+
+    <EditText
+        android:id="@+id/add_et_child_key"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_tv_child_key_hint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:minHeight="48dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/add_tv_child_value_hint"
+        style = "@style/CustomTextViewHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_et_child_key"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="40dp"
+        android:text="@string/add_value_hint" />
+
+    <EditText
+        android:id="@+id/add_et_child_value"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_tv_child_value_hint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:minHeight="48dp"
+        android:inputType="textMultiLine"
+        android:maxLines="4"
+        android:textSize="24sp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/add_btn_save"
+        style="@style/CustomTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_et_child_value"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/add_save_button" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/CustomImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/add_btn_save"
+        android:layout_marginTop="20dp"
+    />
+
+
+</RelativeLayout>

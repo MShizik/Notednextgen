@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">Noted</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="login_email_hint">Email:</string>
+    <string name="login_password_hint">Password:</string>
+    <string name="login_wrong_password_message">Wrong password</string>
+    <string name="login_unknown_user_message">Unknown user</string>
+    <string name="login_greeting_message">Good morning!</string>
+    <string name="login_signin_button">Log in</string>
+    <string name="login_signup_button">Sign up</string>
+    <string name="login_forget_text">Forget your password ?</string>
+    <string name="registration_tv_greeting">Create new account</string>
+    <string name="registration_next_button">Next</string>
+    <string name="registration_back_button">Back</string>
+    <string name="registration_wrong_email_message">It is not an email</string>
+    <string name="registration_wrong_password">Pasword should be at least 8 symbols</string>
+    <string name="registration_wrong_repeat_password">Passwords doesn\'t match</string>
+    <string name="registration_wrong_key_word_message">Key word should be at least 2 symbols</string>
+    <string name="registration_reg_button">Sign up</string>
+    <string name="registration_email_hint">Email:</string>
+    <string name="registration_password_hint">Password:</string>
+    <string name="registration_repeat_password_hint">Repeat password:</string>
+    <string name="registration_key_word_hint">Key word:</string>
+    <string name="reset_greeting_message">Let\'s reset your password</string>
+    <string name="reset_email_hint">Email:</string>
+    <string name="reset_keyword_hint">Key word:</string>
+    <string name="reset_password_hint">New password:</string>
+    <string name="reset_repeat_password_hint">Repeat password:</string>
+    <string name="reset_unknown_user_message">Unknown user</string>
+    <string name="reset_keyword_wrong_message">Wrong key word</string>
+    <string name="reset_password_short_message">Password should be at least 8 symbols</string>
+    <string name="reset_passwords_match_message">Passwords don\'t match</string>
+    <string name="reset_next_button">Next</string>
+    <string name="reset_back_btn">Back</string>
+    <string name="reset_change_button">Change</string>
+    <string name="add_save_button">Save</string>
+    <string name="add_back_button">Back</string>
+    <string name="add_short_message">Fields shouldn\'t be empty</string>
+    <string name="add_key_hint">Category:</string>
+    <string name="add_value_hint">Content:</string>
+    <string name="db_password_child">password</string>
 </resources>
