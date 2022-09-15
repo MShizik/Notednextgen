@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/add_tv_parent_key"
-        style = "@style/CustomTextView"
+        style="@style/CustomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop = "10dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"
         android:text="Default" />
 
@@ -86,10 +86,9 @@
         style="@style/CustomImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/add_btn_save"
-        android:layout_marginTop="20dp"
-    />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
 
 </RelativeLayout>

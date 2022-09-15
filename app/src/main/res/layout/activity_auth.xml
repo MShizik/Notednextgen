@@ -7,7 +7,7 @@
     tools:context=".controllers.auth.AuthActivity">
 
     <FrameLayout
-        android:id="@+id/fragmentContainerView"
+        android:id="@+id/auth_fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

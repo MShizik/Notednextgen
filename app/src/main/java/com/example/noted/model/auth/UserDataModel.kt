@@ -20,7 +20,7 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
        return stEmailUser
     }
 
-    fun checkUserValidation(databaseUserData : DataSnapshot) : Boolean {
+    open fun checkUserValidation(databaseUserData : DataSnapshot) : Boolean {
         return ( (databaseUserData.value != null) and (databaseUserData.child("password").value.toString() == stPasswordUser) )
     }
 

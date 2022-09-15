@@ -22,10 +22,10 @@
         style="@style/CustomTextViewHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/registration_tv_message"
         android:layout_alignParentLeft="true"
-        android:layout_below = "@id/registration_tv_message"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="150dp"
         android:text="@string/login_email_hint" />
 
     <EditText
@@ -35,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/registration_tv_main_hint"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
         android:minHeight="48dp"
         tools:ignore="SpeakableTextPresentCheck" />

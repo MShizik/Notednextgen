@@ -23,13 +23,12 @@ class RegistrationDataModel(private var stKeyWordUser : String,private var stEma
         return !isEmpty(stEmailUser) && android.util.Patterns.EMAIL_ADDRESS.matcher(stEmailUser).matches()
     }
 
-    fun writeDataToDatabase(){
 
+    fun writeDataToDatabase(){
         var databaseAuth = FirebaseAuth.getInstance()
         var database = FirebaseDatabase.getInstance()
         var users = database.reference
         users.child(stEmailUser).child("password").setValue(stPasswordUser)
         users.child(stEmailUser).child("keyword").setValue(stKeyWordUser)
-
     }
 }
