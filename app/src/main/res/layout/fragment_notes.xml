@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controllers.notes.NotesFragment">
 
     <TextView
@@ -40,10 +41,11 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
-        android:divider="@color/color_transparent"
+        android:divider="@color/transparent"
         android:dividerHeight="10dp"
         android:scrollbars = "none"
-        tools:listitem="@layout/notes_list_row"/>
+        tools:listitem="@layout/notes_list_row"
+        android:visibility="visible"/>
 
     <Button
         android:id="@+id/notes_btn_add"
@@ -70,5 +72,18 @@
         android:layout_marginRight="40dp"
         android:text="Back"
         />
+
+    <ProgressBar
+        android:id="@+id/notes_progress_bar"
+        style="@style/customProgressBarStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminateTint="@color/dark_field_stable"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:translationX="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/notes_et_search"
+        android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>

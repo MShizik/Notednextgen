@@ -57,7 +57,7 @@
 
     <style name = "CustomImageButton">
         <item name = "android:src">@drawable/icon_back_light</item>
-        <item name = "android:background">@color/color_transparent</item>
+        <item name = "android:background">@color/transparent</item>
     </style>
 
     <style name = "ImageEditButton">
@@ -66,6 +66,11 @@
 
     <style name = "ImageDeleteButton">
         <item name = "android:src">@drawable/icon_delete_light</item>
+    </style>
+
+
+    <style name="customProgressBarStyle">
+        <item name = "android:background">@color/transparent</item>
     </style>
 
 </resources>
