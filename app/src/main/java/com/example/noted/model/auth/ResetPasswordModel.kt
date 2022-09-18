@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ResetPasswordModel(private var stKeyWordUser : String,private var stEmailUser : String, private var stPasswordUser : String) : UserDataModel(stEmailUser, stPasswordUser) {
 
-    override fun checkUserValidation(databaseUserData : DataSnapshot): Boolean {
+    override fun checkUserValidation(databaseUserData: DataSnapshot): Boolean {
         return ((databaseUserData.value != null) and (databaseUserData.child("keyword").value.toString() == stKeyWordUser) )
     }
 

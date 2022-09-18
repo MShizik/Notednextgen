@@ -89,16 +89,16 @@
         android:text="@string/login_signin_button" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id = "@+id/reset_btn_back"
-        style = "@style/CustomBorderedButton"
+        android:id="@+id/login_btn_signin"
+        style="@style/CustomBorderedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="40dp"
-        android:text="@string/login_signup_button"/>
+        android:text="@string/login_signup_button" />
 
 
 
