@@ -10,7 +10,7 @@ import java.io.Serializable
 
 open class UserDataModel(private var stEmailUser : String, private var stPasswordUser : String) : Serializable{
 
-    var userValidation : Boolean = false
+    private var userValidation : Boolean = false
 
     fun setEmail(stEmail : String){
         stEmailUser = stEmail
@@ -26,6 +26,10 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
 
     open fun checkUserValidation(databaseUserData: DataSnapshot) {
         userValidation = ( (databaseUserData.value != null) and (databaseUserData.child("password").value.toString() == stPasswordUser) )
+    }
+
+    open fun getUserValidation() : Boolean{
+        return userValidation
     }
 
 

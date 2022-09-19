@@ -1,11 +1,20 @@
 package com.example.noted.controllers.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.noted.R
+import com.example.noted.controllers.notes.LoaderActivity
+import com.example.noted.model.auth.ResetPasswordModel
+import com.example.noted.views.auth.ForgetPasswordView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 
 class PasswordForgetFragment : Fragment() {
@@ -23,7 +32,60 @@ class PasswordForgetFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_password_forget, container, false)
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        super.onViewCreated(view, savedInstanceState)
 
+        var UserResetPasswordModel : ResetPasswordModel? = null
+        var ForgetPasswordView = ForgetPasswordView(view)
+        var bCheckValidation : Boolean = false
+        var bPasswordValidation : Boolean = false
+
+        val btnNextStep : Button = view.findViewById(R.id.reset_btn_reset)
+        val btnBack : Button = view.findViewById(R.id.reset_btn_back)
+
+        btnNextStep.setOnClickListener{
+            if(!bCheckValidation) {
+
+                UserResetPasswordModel = ResetPasswordModel(
+                    ForgetPasswordView.getTextFirstField(),
+                    ForgetPasswordView.getTextSecondField()
+                )
+                runBlocking {
+                    UserResetPasswordModel!!.checkUserValidation(getUserData(UserResetPasswordModel!!))
+                }
+                bCheckValidation = UserResetPasswordModel!!.getUserValidation()
+                if(!bCheckValidation){
+                    ForgetPasswordView.showBaseErrorMessage()
+                }
+                else{
+                    ForgetPasswordView.changeToNextStep()
+                }
+            }
+            else if (!bPasswordValidation){
+                if (ForgetPasswordView.getTextFirstField().length < 8){
+                    ForgetPasswordView.showPasswordShortErrorMessage()
+                }else if (!ForgetPasswordView.getTextFirstField().equals(ForgetPasswordView.getTextSecondField())){
+                    ForgetPasswordView.showPasswordMatchErrorMessage()
+                }
+                else{
+                    UserResetPasswordModel!!.changeInfoInDatabase(stPassword = ForgetPasswordView.getTextFirstField())
+                    var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
+                    intentToWorkActivity.putExtra("userModel", UserResetPasswordModel!!.getUserDataModel())
+                    startActivity(intentToWorkActivity)
+                }
+            }
+
+        }
+
+    }
+
+    suspend fun getUserData(userDataModel : ResetPasswordModel) : DataSnapshot{
+        lateinit var result : DataSnapshot
+        val database = FirebaseDatabase.getInstance()
+        val ref = database.getReference("users")
+        ref.child(userDataModel.getEmail()).get().addOnSuccessListener {
+            result = it
+        }.await()
+        return result
     }
 }

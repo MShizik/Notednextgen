@@ -38,5 +38,6 @@
     <string name="add_short_message">Fields shouldn\'t be empty</string>
     <string name="add_key_hint">Category:</string>
     <string name="add_value_hint">Content:</string>
-    <string name="db_password_child">password</string>
+    <string name="db_password_child" translatable="false">password</string>
+    <string name="reset_base_error_message">Wrong data! Try again</string>
 </resources>

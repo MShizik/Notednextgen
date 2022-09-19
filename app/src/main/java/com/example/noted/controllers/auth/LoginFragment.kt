@@ -2,7 +2,6 @@ package com.example.noted.controllers.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+
 
 class LoginFragment : Fragment() {
 
@@ -49,21 +49,24 @@ class LoginFragment : Fragment() {
         btnLogIn.setOnClickListener {
             userModel = UserDataModel(loginView.getTextEmailField(), loginView.getTextPasswordField())
             runBlocking {
-                val job = launch {
-                    var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
-                    userModel!!.checkUserValidation(dsUserInfoFromDB)
-                }
-                job.join()
+                var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
+                   userModel!!.checkUserValidation(dsUserInfoFromDB)
             }
 
-            if (userModel?.userValidation == true){
+            if (userModel?.getUserValidation() == true){
                 var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                 intentToWorkActivity.putExtra("userModel", userModel)
-                startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
+                startActivity(intentToWorkActivity)
             }
             else{
                 loginView.setTextErrorMessage(R.string.login_unknown_user_message.toString())
             }
+        }
+
+        btnSignIn.setOnClickListener{
+            var fragmentSignIn = RegistrationFragment()
+            var transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.auth_fragment_holder, fragmentSignIn)
         }
 
         tvResetPassword.setOnClickListener{
@@ -71,6 +74,8 @@ class LoginFragment : Fragment() {
             var transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.auth_fragment_holder,fragmentResetPassword).commit()
         }
+
+
 
 
     }

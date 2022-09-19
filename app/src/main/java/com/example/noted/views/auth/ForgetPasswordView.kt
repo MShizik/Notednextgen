@@ -56,6 +56,27 @@ class ForgetPasswordView(var rootView : View) {
         btnNext.text = text
     }
 
+    fun changeToNextStep(){
+        setTextBtnNext(R.string.reset_change_button.toString())
+        setTextFirstHint(R.string.reset_password_hint.toString())
+        setTextSecondHint(R.string.reset_repeat_password_hint.toString())
+        setTextMessage(R.string.reset_greeting_message.toString())
+    }
+
+    fun showBaseErrorMessage(){
+        setTextErrorMessage(R.string.reset_base_error_message.toString())
+        setTextFirstField("");
+        setTextSecondField("")
+    }
+
+    fun showPasswordShortErrorMessage(){
+        setTextErrorMessage(R.string.reset_password_short_message.toString())
+    }
+
+    fun showPasswordMatchErrorMessage(){
+        setTextErrorMessage(R.string.reset_passwords_match_message.toString())
+    }
+
 
 
 }
