@@ -30,6 +30,11 @@ class ResetPasswordModel(private var stKeyWordUser : String,private var stEmailU
         return UserDataModel(stEmailUser, stPasswordUser)
     }
 
+    fun checkPassword(stPassword: String) : Boolean{
+        var regexSequence = "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d).*\$".toRegex()
+        return regexSequence.matches(stPassword)
+    }
+
 
 
 }

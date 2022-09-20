@@ -1,5 +1,6 @@
 package com.example.noted.model.auth
 
+import com.example.noted.model.notes.noteStructure
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -12,6 +13,8 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
 
     private var userValidation : Boolean = false
 
+    private lateinit var noteRoot : noteStructure
+
     fun setEmail(stEmail : String){
         stEmailUser = stEmail
     }
@@ -22,6 +25,10 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
 
     fun getEmail() : String{
        return stEmailUser
+    }
+
+    fun getRootNote()  : noteStructure{
+        return noteRoot
     }
 
     open fun checkUserValidation(databaseUserData: DataSnapshot) {

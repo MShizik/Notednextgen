@@ -4,23 +4,49 @@ import android.text.TextUtils.isEmpty
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class RegistrationDataModel(private var stKeyWordUser : String,private var stEmailUser : String, private var stPasswordUser : String) : UserDataModel(stEmailUser, stPasswordUser){
+class RegistrationDataModel(){
+
+    private  var stKeyWordUser : String = "";
+    private var stPasswordUser : String = ""
+    private var stEmailUser : String = ""
 
     fun setKeyWord( stKeyWord : String){
         stKeyWordUser = stKeyWord
     }
 
-    fun checkKeyWord() : Boolean{
-        return stKeyWordUser.length > 3
+    fun setEmail (stEmailUser: String){
+        this.stEmailUser = stEmailUser
     }
 
-    fun checkPassword() : Boolean{
+    fun setPassword(stPassword: String){
+        this.stPasswordUser = stPassword
+    }
+
+    fun getPassword():String{
+        return this.stPasswordUser
+    }
+
+    fun checkKeyWord(stKeyWord: String) : Boolean{
+        return stKeyWord.length > 3
+    }
+
+    fun checkPassword(stPassword : String) : Boolean{
         var regexSequence = "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d).*\$".toRegex()
-        return regexSequence.matches(stPasswordUser)
+        return regexSequence.matches(stPassword)
     }
 
-    fun checkEmail() : Boolean{
-        return !isEmpty(stEmailUser) && android.util.Patterns.EMAIL_ADDRESS.matcher(stEmailUser).matches()
+    fun checkEmail(stEmail : String) : Boolean{
+        return !isEmpty(stEmail) && android.util.Patterns.EMAIL_ADDRESS.matcher(stEmail).matches()
+    }
+
+    fun setData(stEmailUser : String, stPasswordUser : String, stKeyWordUser : String) {
+        this.stEmailUser = stEmailUser
+        this.stPasswordUser = stPasswordUser
+        this.stKeyWordUser = stKeyWordUser
+    }
+
+    fun createUserDataModel() : UserDataModel{
+        return UserDataModel(stEmailUser = stEmailUser, stPasswordUser = stPasswordUser)
     }
 
 

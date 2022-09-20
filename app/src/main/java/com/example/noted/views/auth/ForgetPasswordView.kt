@@ -63,6 +63,15 @@ class ForgetPasswordView(var rootView : View) {
         setTextMessage(R.string.reset_greeting_message.toString())
     }
 
+    fun changeToBackStep(){
+        setTextBtnNext(R.string.reset_next_button.toString())
+        setTextFirstHint(R.string.reset_email_hint.toString())
+        setTextSecondHint(R.string.reset_keyword_hint.toString())
+        setTextMessage(R.string.reset_greeting_message.toString())
+        setTextFirstField("");
+        setTextSecondField("")
+    }
+
     fun showBaseErrorMessage(){
         setTextErrorMessage(R.string.reset_base_error_message.toString())
         setTextFirstField("");

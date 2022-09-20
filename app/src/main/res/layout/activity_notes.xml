@@ -7,6 +7,7 @@
     tools:context=".controllers.notes.NotesActivity">
 
     <FrameLayout
+        android:id = "@+id/notes_fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

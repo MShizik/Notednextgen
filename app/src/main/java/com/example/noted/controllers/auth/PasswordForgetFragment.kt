@@ -1,6 +1,5 @@
 package com.example.noted.controllers.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import android.content.Intent
 
 
 class PasswordForgetFragment : Fragment() {
@@ -62,17 +62,31 @@ class PasswordForgetFragment : Fragment() {
                 }
             }
             else if (!bPasswordValidation){
-                if (ForgetPasswordView.getTextFirstField().length < 8){
+                if (UserResetPasswordModel!!.checkPassword(ForgetPasswordView.getTextFirstField())){
                     ForgetPasswordView.showPasswordShortErrorMessage()
                 }else if (!ForgetPasswordView.getTextFirstField().equals(ForgetPasswordView.getTextSecondField())){
                     ForgetPasswordView.showPasswordMatchErrorMessage()
                 }
                 else{
                     UserResetPasswordModel!!.changeInfoInDatabase(stPassword = ForgetPasswordView.getTextFirstField())
-                    var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
+                    var intentToWorkActivity = Intent(requireContext(), LoaderActivity::class.java)
                     intentToWorkActivity.putExtra("userModel", UserResetPasswordModel!!.getUserDataModel())
                     startActivity(intentToWorkActivity)
                 }
+            }
+
+        }
+
+        btnBack.setOnClickListener {
+            if(!bCheckValidation){
+                var fragmentLogIn = LoginFragment()
+                var transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.auth_fragment_holder, fragmentLogIn)
+            }
+            else{
+                ForgetPasswordView.changeToBackStep()
+                bCheckValidation = false
+                bPasswordValidation = false
             }
 
         }

@@ -16,7 +16,7 @@
             android:name=".controllers.notes.NotesActivity"
             android:exported="false" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".controllers.auth.AuthActivity"
             android:exported="false" />
 
         <meta-data
