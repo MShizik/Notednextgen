@@ -1,6 +1,10 @@
 package com.example.noted.model.notes
 
-class noteStructure(private var key : String, private var value : String) {
+import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
+
+class noteStructure(private var key : String, private var value : String) : Serializable {
 
     private var noteParent : noteStructure? = null
 
@@ -53,6 +57,7 @@ class noteStructure(private var key : String, private var value : String) {
             alTmp.add(tmp.getKey())
             tmp = tmp.noteParent
         }
+        alTmp.reverse();
         return alTmp
     }
 

@@ -1,5 +1,6 @@
 package com.example.noted.model.auth
 
+import android.content.Context
 import android.text.TextUtils.isEmpty
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -56,5 +57,15 @@ class RegistrationDataModel(){
         var users = database.reference
         users.child(stEmailUser).child("password").setValue(stPasswordUser)
         users.child(stEmailUser).child("keyword").setValue(stKeyWordUser)
+    }
+
+    fun writeUser(context: Context){
+        val preferencesUserData = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password"))) {
+            val preferencesEditor = preferencesUserData.edit()
+            preferencesEditor.putString("email", stEmailUser.replace(".", ""))
+            preferencesEditor.putString("password", stPasswordUser)
+            preferencesEditor.apply()
+        }
     }
 }

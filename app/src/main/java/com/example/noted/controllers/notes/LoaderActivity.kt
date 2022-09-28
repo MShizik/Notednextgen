@@ -21,7 +21,7 @@ class LoaderActivity : AppCompatActivity() {
         lateinit var result : DataSnapshot
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("users")
-        ref.child("email").child("notes").get().addOnSuccessListener {
+        ref.child(dmUser.getEmail()).child("notes").get().addOnSuccessListener {
             getUserNotes(dmUser.getRootNote(), it)
         }
         val intentWorkActivity : Intent =  Intent(this, NotesActivity::class.java)

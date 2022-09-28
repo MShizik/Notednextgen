@@ -1,5 +1,6 @@
 package com.example.noted.controllers.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,6 +48,26 @@ class LoginFragment : Fragment() {
         val tvResetPassword : TextView = view.findViewById(R.id.login_tv_forget_password)
 
 
+        val preferencesUserSign = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
+
+
+        if(preferencesUserSign.contains("email") and preferencesUserSign.contains("password")) {
+            userModel = UserDataModel(preferencesUserSign.getString("email","default").toString(), preferencesUserSign.getString("password","default").toString())
+
+            runBlocking {
+                var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
+                userModel!!.checkUserValidation(dsUserInfoFromDB)
+            }
+
+            if (userModel?.getUserValidation()){
+                var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
+                intentToWorkActivity.putExtra("userModel", userModel)
+                startActivity(intentToWorkActivity)
+            }
+
+
+        }
+
         btnLogIn.setOnClickListener {
             userModel = UserDataModel(loginView.getTextEmailField(), loginView.getTextPasswordField())
             runBlocking {
@@ -55,6 +76,7 @@ class LoginFragment : Fragment() {
             }
 
             if (userModel?.getUserValidation() == true){
+                userModel?.writeUser(requireContext())
                 var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                 intentToWorkActivity.putExtra("userModel", userModel)
                 startActivity(intentToWorkActivity)

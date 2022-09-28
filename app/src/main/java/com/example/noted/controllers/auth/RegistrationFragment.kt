@@ -71,6 +71,7 @@ class RegistrationFragment : Fragment() {
                 4->{
                     if(dmRegistrationModel.getPassword().equals(vRegistration.getTextMainField())){
                         dmRegistrationModel.writeDataToDatabase()
+                        dmRegistrationModel.writeUser(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                         intentToWorkActivity.putExtra("userModel", dmRegistrationModel.createUserDataModel())
                         startActivity(intentToWorkActivity)

@@ -1,5 +1,6 @@
 package com.example.noted.model.auth
 
+import android.content.Context
 import com.example.noted.model.notes.noteStructure
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -37,6 +38,20 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
 
     open fun getUserValidation() : Boolean{
         return userValidation
+    }
+
+    fun checkSavedUser(){
+
+    }
+
+    fun writeUser(context: Context){
+        val preferencesUserData = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password"))) {
+            val preferencesEditor = preferencesUserData.edit()
+            preferencesEditor.putString("email", stEmailUser.replace(".", ""))
+            preferencesEditor.putString("password", stPasswordUser)
+            preferencesEditor.apply()
+        }
     }
 
 
