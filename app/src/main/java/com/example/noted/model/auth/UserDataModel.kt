@@ -12,7 +12,7 @@ import java.io.Serializable
 
 open class UserDataModel(private var stEmailUser : String, private var stPasswordUser : String) : Serializable{
 
-    private var userValidation : Boolean = false
+    var userValidation = false
 
     private lateinit var noteRoot : noteStructure
 
@@ -36,9 +36,7 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
         userValidation = ( (databaseUserData.value != null) and (databaseUserData.child("password").value.toString() == stPasswordUser) )
     }
 
-    open fun getUserValidation() : Boolean{
-        return userValidation
-    }
+
 
     fun checkSavedUser(){
 
