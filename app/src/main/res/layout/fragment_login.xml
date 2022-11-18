@@ -88,18 +88,18 @@
         android:layout_marginTop="100dp"
         android:text="@string/login_signin_button" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_btn_signin"
-        style="@style/CustomBorderedButton"
+
+    <TextView
+        android:id="@+id/login_tv_signup"
+        style = "@style/CustomTextViewTinyHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_btn_login"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_et_email"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="40dp"
         android:text="@string/login_signup_button" />
-
+    
 
 
 

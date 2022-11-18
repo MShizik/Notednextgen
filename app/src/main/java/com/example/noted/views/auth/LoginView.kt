@@ -3,6 +3,7 @@ package com.example.noted.views.auth
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -11,13 +12,15 @@ import com.example.noted.R
 
 class LoginView(var rootView : View) {
 
-    var tvMessage : TextView = rootView.findViewById(R.id.login_tv_greeting)
-    var tvEmailHint : TextView = rootView.findViewById(R.id.login_tv_email_hint)
-    var tvPasswordHint : TextView = rootView.findViewById(R.id.login_tv_password_hint)
-    var tvForgetPasswordHint : TextView = rootView.findViewById(R.id.login_tv_forget_password)
+    private var tvMessage : TextView = rootView.findViewById(R.id.login_tv_greeting)
+    private var tvEmailHint : TextView = rootView.findViewById(R.id.login_tv_email_hint)
+    private var tvPasswordHint : TextView = rootView.findViewById(R.id.login_tv_password_hint)
+    private var tvForgetPasswordHint : TextView = rootView.findViewById(R.id.login_tv_forget_password)
+    private var tvSignUpHint : TextView = rootView.findViewById(R.id.login_tv_signup)
 
-    var etEmailField : EditText = rootView.findViewById(R.id.login_et_email)
-    var etPasswordField : EditText = rootView.findViewById(R.id.login_et_password)
+    private var etEmailField : EditText = rootView.findViewById(R.id.login_et_email)
+    private var etPasswordField : EditText = rootView.findViewById(R.id.login_et_password)
+
 
 
     fun setTextMessage(message : String) {

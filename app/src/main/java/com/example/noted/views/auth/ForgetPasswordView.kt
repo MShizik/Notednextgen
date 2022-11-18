@@ -18,6 +18,19 @@ class ForgetPasswordView(var rootView : View) {
     private var btnNext : Button = rootView.findViewById(R.id.reset_btn_reset)
 
 
+    fun changeHintsToSecondState(){
+        setTextSecondHint(R.string.reset_password_hint.toString())
+        setTextSecondHint(R.string.reset_repeat_password_hint.toString())
+        setTextMessage(R.string.reset_greeting_message.toString())
+    }
+
+    fun changeHintsToFirstState(){
+        setTextFirstHint(R.string.reset_email_hint.toString())
+        setTextSecondHint(R.string.reset_keyword_hint.toString())
+        setTextMessage(R.string.reset_greeting_message.toString())
+    }
+
+
     fun setTextMessage(message : String){
         tvMessage.text = message
         tvMessage.setTextAppearance(R.style.CustomTextView)

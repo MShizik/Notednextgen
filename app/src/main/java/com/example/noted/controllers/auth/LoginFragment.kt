@@ -42,8 +42,9 @@ class LoginFragment : Fragment() {
         var loginView : LoginView = LoginView(view)
 
         val btnLogIn : Button = view.findViewById(R.id.login_btn_login)
-        val btnSignIn : Button = view.findViewById(R.id.login_btn_signin)
+        val tvSignUp : TextView = view.findViewById(R.id.login_tv_signup)
         val tvResetPassword : TextView = view.findViewById(R.id.login_tv_forget_password)
+
 
 
         btnLogIn.setOnClickListener {
@@ -70,6 +71,12 @@ class LoginFragment : Fragment() {
             var fragmentResetPassword = PasswordForgetFragment()
             var transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.auth_fragment_holder,fragmentResetPassword).commit()
+        }
+
+        tvSignUp.setOnClickListener{
+            var fragmentRegistration = RegistrationFragment()
+            var transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.auth_fragment_holder,fragmentRegistration).commit()
         }
 
 

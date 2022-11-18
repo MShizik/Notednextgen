@@ -19,6 +19,10 @@ class RegistrationDataModel(private var stKeyWordUser : String,private var stEma
         return regexSequence.matches(stPasswordUser)
     }
 
+    fun checkRepeatPassword(stRepeatedPassword : String) : Boolean{
+        return stRepeatedPassword == stPasswordUser
+    }
+
     fun checkEmail() : Boolean{
         return !isEmpty(stEmailUser) && android.util.Patterns.EMAIL_ADDRESS.matcher(stEmailUser).matches()
     }

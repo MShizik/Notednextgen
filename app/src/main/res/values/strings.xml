@@ -7,7 +7,7 @@
     <string name="login_unknown_user_message">Unknown user</string>
     <string name="login_greeting_message">Good morning!</string>
     <string name="login_signin_button">Log in</string>
-    <string name="login_signup_button">Sign up</string>
+    <string name="login_signup_button">Sign  in?</string>
     <string name="login_forget_text">Forget your password ?</string>
     <string name="registration_tv_greeting">Create new account</string>
     <string name="registration_next_button">Next</string>
@@ -28,7 +28,7 @@
     <string name="reset_repeat_password_hint">Repeat password:</string>
     <string name="reset_unknown_user_message">Unknown user</string>
     <string name="reset_keyword_wrong_message">Wrong key word</string>
-    <string name="reset_password_short_message">Password should be at least 8 symbols</string>
+    <string name="reset_password_quality_message">Password is not strong enough</string>
     <string name="reset_passwords_match_message">Passwords don\'t match</string>
     <string name="reset_next_button">Next</string>
     <string name="reset_back_btn">Back</string>
