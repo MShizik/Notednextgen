@@ -1,5 +1,6 @@
 package com.example.noted.model.auth
 
+import android.content.Context
 import android.text.TextUtils.isEmpty
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -28,11 +29,13 @@ class RegistrationDataModel(private var stKeyWordUser : String,private var stEma
     }
 
 
+
+
     fun writeDataToDatabase(){
         var databaseAuth = FirebaseAuth.getInstance()
         var database = FirebaseDatabase.getInstance()
         var users = database.reference
-        users.child(stEmailUser).child("password").setValue(stPasswordUser)
-        users.child(stEmailUser).child("keyword").setValue(stKeyWordUser)
+        users.child(stEmailUser.replace(".","")).child("password").setValue(stPasswordUser)
+        users.child(stEmailUser.replace(".","")).child("keyword").setValue(stKeyWordUser)
     }
 }

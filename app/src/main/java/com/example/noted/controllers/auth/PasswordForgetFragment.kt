@@ -64,23 +64,24 @@ class PasswordForgetFragment : Fragment() {
                 }
 
                 if (userDataModel?.userValidation == true) {
-                    viewForgetPassword.changeHintsToSecondState()
+                    viewForgetPassword.changeToNextStep()
                     iState = 1
                 }
-                else viewForgetPassword.setTextErrorMessage(R.string.reset_keyword_wrong_message.toString())
+                else viewForgetPassword.showBaseErrorMessage()
             }
             else{
                 if(viewForgetPassword.getTextFirstField() == viewForgetPassword.getTextSecondField()) {
                     userDataModel?.setPassword(viewForgetPassword.getTextFirstField())
                     if(userDataModel?.checkPassword() == true){
                         userDataModel?.changeInfoInDatabase()
+                        userDataModel?.changeRememberedInfo(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                         intentToWorkActivity.putExtra("userModel", userDataModel)
                         startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
                     }
-                    else viewForgetPassword.setTextErrorMessage(R.string.reset_password_quality_message.toString())
+                    else viewForgetPassword.showPasswordShortErrorMessage()
                 }
-                else viewForgetPassword.setTextErrorMessage(R.string.reset_keyword_wrong_message.toString())
+                else viewForgetPassword.showPasswordMatchErrorMessage()
 
             }
         }
@@ -91,7 +92,7 @@ class PasswordForgetFragment : Fragment() {
                 var transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.auth_fragment_holder,fragmentLogIn).commit()
             }
-            else viewForgetPassword.changeHintsToFirstState()
+            else viewForgetPassword.changeToBackStep()
 
         }
     }

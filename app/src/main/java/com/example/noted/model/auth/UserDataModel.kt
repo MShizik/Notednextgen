@@ -36,21 +36,14 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
         userValidation = ( (databaseUserData.value != null) and (databaseUserData.child("password").value.toString() == stPasswordUser) )
     }
 
-
-
-    fun checkSavedUser(){
-
-    }
-
-    fun writeUser(context: Context){
+    fun saveUserData(context : Context){
         val preferencesUserData = context.getSharedPreferences("user", Context.MODE_PRIVATE)
-        if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password"))) {
-            val preferencesEditor = preferencesUserData.edit()
-            preferencesEditor.putString("email", stEmailUser.replace(".", ""))
-            preferencesEditor.putString("password", stPasswordUser)
-            preferencesEditor.apply()
-        }
+        val preferencesEditor = preferencesUserData.edit()
+        preferencesEditor.putString("email", stEmailUser)
+        preferencesEditor.putString("password", stPasswordUser)
+        preferencesEditor.apply()
     }
+
 
 
 

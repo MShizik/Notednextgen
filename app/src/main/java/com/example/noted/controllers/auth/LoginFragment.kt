@@ -1,5 +1,6 @@
 package com.example.noted.controllers.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -48,16 +49,28 @@ class LoginFragment : Fragment() {
 
 
         btnLogIn.setOnClickListener {
+            val preferencesUserData = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
+            if((preferencesUserData.contains("email") and preferencesUserData.contains("password")))
+                userModel = UserDataModel(preferencesUserData.getString("user",loginView.getTextEmailField()).toString(), preferencesUserData.getString("password",loginView.getTextPasswordField()).toString())
+
+
             userModel = UserDataModel(loginView.getTextEmailField(), loginView.getTextPasswordField())
             runBlocking {
                 val job = launch {
                     var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
+                    if (dsUserInfoFromDB == null) {
+                        loginView.setTextErrorMessage(requireContext().getString(R.string.login_unknown_user_message))
+                        return@launch
+                    }
                     userModel!!.checkUserValidation(dsUserInfoFromDB)
                 }
                 job.join()
             }
 
+
             if (userModel?.userValidation == true){
+                if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password")))
+                    userModel?.saveUserData(context = requireContext())
                 var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                 intentToWorkActivity.putExtra("userModel", userModel)
                 startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
@@ -82,13 +95,13 @@ class LoginFragment : Fragment() {
 
     }
 
-    suspend fun getUserInfo(userModel : UserDataModel) : DataSnapshot {
-        lateinit var result : DataSnapshot
+    suspend fun getUserInfo(userModel : UserDataModel) : DataSnapshot? {
+        var result : DataSnapshot? = null
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("users")
-        ref.child(userModel.getEmail()).get().addOnSuccessListener {
+        ref.child(userModel.getEmail().replace(".","")).get().addOnSuccessListener {
             result = it
-        }.await()
+        }
         return result
     }
 

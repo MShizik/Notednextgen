@@ -38,44 +38,45 @@ class RegistrationFragment : Fragment() {
         val btnBack : Button = view.findViewById(R.id.registration_btn_back)
 
         var iState : Int = 0
+        var error : Boolean = false
 
         btnNext.setOnClickListener {
             when ( iState ){
                 0->{
                     userModel?.setEmail(viewRegistration.getTextMainField())
-                    if ( userModel.checkEmail() ){
-                        viewRegistration.setTextMainHint(R.string.registration_key_word_hint.toString())
+                    error = if ( userModel.checkEmail() ){
                         iState++
-                    }
-                    else viewRegistration.setTextErrorMessage(R.string.registration_wrong_email_message.toString())
+                        false
+                    } else true
                 }
                 1->{
-                    if ( userModel.checkKeyWord() ){
-                        viewRegistration.setTextMainHint(R.string.registration_password_hint.toString())
+                    error = if ( userModel.checkKeyWord() ){
                         iState++
-                    }
-                    else viewRegistration.setTextErrorMessage(R.string.registration_wrong_key_word_message.toString())
+                        false
+                    } else true
                 }
 
                 2->{
-                    if ( userModel.checkPassword() ){
-                        viewRegistration.setTextMainHint(R.string.registration_repeat_password_hint.toString())
+                    error = if ( userModel.checkPassword() ){
                         iState++
-                    }
-                    else viewRegistration.setTextErrorMessage(R.string.registration_wrong_password.toString())
+                        false
+                    } else true
                 }
 
                 3->{
                     if ( userModel.checkRepeatPassword(viewRegistration.getTextMainField()) ){
-                        userModel?.writeDataToDatabase()
+                        userModel.writeDataToDatabase()
+                        userModel.saveUserData(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                         intentToWorkActivity.putExtra("userModel", userModel)
                         startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
                     }
-                    else viewRegistration.setTextErrorMessage(R.string.registration_wrong_repeat_password.toString())
+                    else error = true
 
                 }
             }
+            viewRegistration.changeStep(iState + 1)
+            if( error ) viewRegistration.showError(101 + iState)
         }
 
         btnBack.setOnClickListener {

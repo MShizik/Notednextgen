@@ -45,10 +45,10 @@ class RegistrationView(var rootView: View) {
     fun changeStep(iStepCount : Int){
         var currentHint : String = "";
         when(iStepCount){
-            1->currentHint = R.string.registration_email_hint.toString()
-            2->currentHint = R.string.registration_key_word_hint.toString()
-            3->currentHint = R.string.registration_password_hint.toString()
-            4->currentHint = R.string.registration_repeat_password_hint.toString()
+            1->currentHint =.toString()
+            2->currentHint =.toString()
+            3->currentHint =.toString()
+            4->currentHint =.toString()
         }
         setTextMainHint(currentHint)
         if(iStepCount == 4){
