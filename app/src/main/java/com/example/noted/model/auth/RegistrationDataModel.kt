@@ -35,7 +35,6 @@ class RegistrationDataModel(stKeyWord : String, stEmail : String, stPassword : S
 
 
 
-
     fun writeDataToDatabase(){
         var databaseAuth = FirebaseAuth.getInstance()
         var database = FirebaseDatabase.getInstance()

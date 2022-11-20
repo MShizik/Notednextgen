@@ -76,7 +76,7 @@ class LoginFragment : Fragment() {
                     userModel?.saveUserData(context = requireContext())
                 var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                 intentToWorkActivity.putExtra("userModel", userModel)
-                startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
+                startActivity(intentToWorkActivity)
             }
             else{
                 if (userModel?.getEmailValid() == true) {

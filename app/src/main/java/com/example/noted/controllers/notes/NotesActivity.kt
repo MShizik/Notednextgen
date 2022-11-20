@@ -15,7 +15,7 @@ class NotesActivity : AppCompatActivity() {
         var fragmentToChange  = NotesFragment()
         var tmpBundle :  Bundle = Bundle()
         tmpBundle.putSerializable("userModel",dmUser)
-        tmpBundle.putSerializable("nextNode",dmUser.getRootNote())
+        tmpBundle.putSerializable("nextNode", dmUser.getRootNote())
         fragmentToChange.arguments = tmpBundle
         supportFragmentManager.beginTransaction().replace(R.id.notes_fragment_holder,fragmentToChange).commit()
     }

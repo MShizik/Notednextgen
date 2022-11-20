@@ -79,7 +79,7 @@ class PasswordForgetFragment : Fragment() {
                         userDataModel?.changeRememberedInfo(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                         intentToWorkActivity.putExtra("userModel", userDataModel)
-                        startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
+                        startActivity(intentToWorkActivity)
                     }
                     else viewForgetPassword.showPasswordShortErrorMessage()
                 }

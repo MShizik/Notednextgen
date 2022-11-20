@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.coroutineScope
 import java.io.Serializable
 
-open class UserDataModel(stEmail : String, protected var stPassword : String) : Serializable{
+open class UserDataModel(stEmail : String, stPassword : String) : Serializable{
 
     protected var stEmailUser = stEmail.replace(".","").replace(" ","")
     protected var stPasswordUser = stPassword
@@ -19,7 +19,7 @@ open class UserDataModel(stEmail : String, protected var stPassword : String) : 
     private var userPasswordValidation = false
     private var userEmailValidation = false
 
-    private lateinit var noteRoot : noteStructure
+    private  var noteRoot : noteStructure? = null
 
     fun setEmail(stEmail : String){
         stEmailUser = stEmail.replace(".","").replace(" ","")
@@ -33,7 +33,7 @@ open class UserDataModel(stEmail : String, protected var stPassword : String) : 
        return stEmailUser
     }
 
-    fun getRootNote()  : noteStructure{
+    fun getRootNote()  : noteStructure?{
         return noteRoot
     }
 

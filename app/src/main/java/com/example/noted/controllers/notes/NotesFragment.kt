@@ -34,10 +34,10 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val dmUser = arguments?.getSerializable("userModel") as UserDataModel
-        var currentNode : noteStructure  = arguments?.getSerializable("nextNode") as noteStructure
+        var currentNode : noteStructure?  = arguments?.getSerializable("nextNode") as noteStructure?
         val viewNotesView : NotesListView = NotesListView(view);
 
-        viewNotesView.setDirectoryWay(currentNode.getKey());
+        viewNotesView.setDirectoryWay(currentNode?.getKey()!!);
         viewNotesView.startLoadingAnimation()
 
         var adapter = ProductsListAdapter(requireContext(), currentNode.getAllChildren());
@@ -51,11 +51,11 @@ class NotesFragment : Fragment() {
         val btnBack = view.findViewById(R.id.notes_btn_back) as Button
 
         btnBack.setOnClickListener{
-            if (currentNode.getParent() == null){
+            if (currentNode?.getParent() == null){
 
             }
             else{
-                currentNode = currentNode.getParent()!!
+                currentNode = currentNode?.getParent()!!
                 adapter.notifyDataSetChanged()
             }
         }

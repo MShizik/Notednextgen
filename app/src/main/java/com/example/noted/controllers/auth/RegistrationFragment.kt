@@ -71,7 +71,7 @@ class RegistrationFragment : Fragment() {
                         userModel.saveUserData(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
                         intentToWorkActivity.putExtra("userModel", userModel)
-                        startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
+                        startActivity(intentToWorkActivity)
                     }
                     else error = true
 
