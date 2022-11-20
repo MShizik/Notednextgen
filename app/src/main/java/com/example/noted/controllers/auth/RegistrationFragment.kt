@@ -32,7 +32,7 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var userModel : RegistrationDataModel = RegistrationDataModel("","","")
-        val viewRegistration = RegistrationView(view)
+        val viewRegistration = RegistrationView(view,resources)
 
         val btnNext : Button = view.findViewById(R.id.registration_btn_next)
         val btnBack : Button = view.findViewById(R.id.registration_btn_back)
@@ -43,13 +43,14 @@ class RegistrationFragment : Fragment() {
         btnNext.setOnClickListener {
             when ( iState ){
                 0->{
-                    userModel?.setEmail(viewRegistration.getTextMainField())
+                    userModel.setEmail(viewRegistration.getTextMainField())
                     error = if ( userModel.checkEmail() ){
                         iState++
                         false
                     } else true
                 }
                 1->{
+                    userModel.setKeyWord(viewRegistration.getTextMainField())
                     error = if ( userModel.checkKeyWord() ){
                         iState++
                         false
@@ -57,6 +58,7 @@ class RegistrationFragment : Fragment() {
                 }
 
                 2->{
+                    userModel.setPassword(viewRegistration.getTextMainField())
                     error = if ( userModel.checkPassword() ){
                         iState++
                         false
@@ -86,11 +88,11 @@ class RegistrationFragment : Fragment() {
                     var transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.auth_fragment_holder,fragmentLogIn).commit()
                 }
-                1->viewRegistration.setTextMainHint(R.string.registration_email_hint.toString())
-                2->viewRegistration.setTextMainHint(R.string.registration_key_word_hint.toString())
-                3->viewRegistration.setTextMainHint(R.string.registration_password_hint.toString())
+                1->viewRegistration.setTextMainHint(resources.getString(R.string.registration_email_hint))
+                2->viewRegistration.setTextMainHint(resources.getString(R.string.registration_key_word_hint))
+                3->viewRegistration.setTextMainHint(resources.getString(R.string.registration_password_hint))
             }
-            viewRegistration.setTextMessage(R.string.registration_tv_greeting.toString())
+            viewRegistration.setTextMessage(resources.getString(R.string.registration_tv_greeting))
             iState--
         }
     }

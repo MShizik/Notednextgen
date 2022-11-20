@@ -58,16 +58,18 @@ class PasswordForgetFragment : Fragment() {
                             viewForgetPassword.setTextErrorMessage(R.string.reset_unknown_user_message.toString())
                             return@launch
                         }
+                        userDataModel!!.setEmailValid(true)
                         userDataModel!!.checkUserValidation(dsUserInfoFromDB)
                     }
                     job.join()
                 }
 
-                if (userDataModel?.userValidation == true) {
+                if (userDataModel?.getPassValid() == true) {
                     viewForgetPassword.changeToNextStep()
                     iState = 1
                 }
-                else viewForgetPassword.showBaseErrorMessage()
+                else if(userDataModel?.getEmailValid() == true) viewForgetPassword.showBaseErrorMessage()
+
             }
             else{
                 if(viewForgetPassword.getTextFirstField() == viewForgetPassword.getTextSecondField()) {

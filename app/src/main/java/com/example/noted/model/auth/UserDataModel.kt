@@ -10,14 +10,19 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.coroutineScope
 import java.io.Serializable
 
-open class UserDataModel(private var stEmailUser : String, private var stPasswordUser : String) : Serializable{
+open class UserDataModel(stEmail : String, protected var stPassword : String) : Serializable{
 
-    var userValidation = false
+    protected var stEmailUser = stEmail.replace(".","").replace(" ","")
+    protected var stPasswordUser = stPassword
+
+
+    private var userPasswordValidation = false
+    private var userEmailValidation = false
 
     private lateinit var noteRoot : noteStructure
 
     fun setEmail(stEmail : String){
-        stEmailUser = stEmail
+        stEmailUser = stEmail.replace(".","").replace(" ","")
     }
 
     fun setPassword( stPassword : String){
@@ -33,7 +38,7 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
     }
 
     open fun checkUserValidation(databaseUserData: DataSnapshot) {
-        userValidation = ( (databaseUserData.value != null) and (databaseUserData.child("password").value.toString() == stPasswordUser) )
+        userPasswordValidation = databaseUserData.child("password").value.toString() == stPasswordUser
     }
 
     fun saveUserData(context : Context){
@@ -42,6 +47,22 @@ open class UserDataModel(private var stEmailUser : String, private var stPasswor
         preferencesEditor.putString("email", stEmailUser)
         preferencesEditor.putString("password", stPasswordUser)
         preferencesEditor.apply()
+    }
+
+    fun getPassValid() : Boolean{
+        return userPasswordValidation;
+    }
+
+    fun getEmailValid() : Boolean {
+        return userEmailValidation
+    }
+
+    fun setPassValid(valid : Boolean){
+        userPasswordValidation = valid
+    }
+
+    fun setEmailValid(valid : Boolean){
+        userEmailValidation = valid
     }
 
 

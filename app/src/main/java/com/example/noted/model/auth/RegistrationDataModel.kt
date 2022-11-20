@@ -2,10 +2,13 @@ package com.example.noted.model.auth
 
 import android.content.Context
 import android.text.TextUtils.isEmpty
+import android.util.Patterns
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class RegistrationDataModel(private var stKeyWordUser : String,private var stEmailUser : String, private var stPasswordUser : String) : UserDataModel(stEmailUser, stPasswordUser){
+class RegistrationDataModel(stKeyWord : String, stEmail : String, stPassword : String) : UserDataModel(stEmail, stPassword){
+
+    protected var stKeyWordUser = stKeyWord
 
     fun setKeyWord( stKeyWord : String){
         stKeyWordUser = stKeyWord
@@ -25,8 +28,10 @@ class RegistrationDataModel(private var stKeyWordUser : String,private var stEma
     }
 
     fun checkEmail() : Boolean{
-        return !isEmpty(stEmailUser) && android.util.Patterns.EMAIL_ADDRESS.matcher(stEmailUser).matches()
+        return !isEmpty(stEmailUser)
     }
+
+
 
 
 

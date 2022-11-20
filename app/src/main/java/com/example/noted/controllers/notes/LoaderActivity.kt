@@ -16,12 +16,12 @@ class LoaderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
 
-        var dmUser : UserDataModel = intent.extras?.getSerializable("userModel") as UserDataModel
+        var dmUser : UserDataModel? = intent.extras?.getSerializable("userModel") as UserDataModel?
 
         lateinit var result : DataSnapshot
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("users")
-        ref.child(dmUser.getEmail()).child("notes").get().addOnSuccessListener {
+        ref.child(dmUser!!.getEmail()  ).child("notes").get().addOnSuccessListener {
             getUserNotes(dmUser.getRootNote(), it)
         }
         val intentWorkActivity : Intent =  Intent(this, NotesActivity::class.java)

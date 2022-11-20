@@ -59,16 +59,19 @@ class LoginFragment : Fragment() {
                 val job = launch {
                     var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
                     if (dsUserInfoFromDB == null) {
-                        loginView.setTextErrorMessage(requireContext().getString(R.string.login_unknown_user_message))
+                        userModel!!.setEmailValid(false)
+                        loginView.setTextErrorMessage(resources.getString(R.string.login_unknown_user_message))
                         return@launch
                     }
+                    userModel!!.setEmailValid(true)
                     userModel!!.checkUserValidation(dsUserInfoFromDB)
                 }
                 job.join()
             }
 
 
-            if (userModel?.userValidation == true){
+
+            if (userModel?.getPassValid() == true){
                 if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password")))
                     userModel?.saveUserData(context = requireContext())
                 var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
@@ -76,7 +79,9 @@ class LoginFragment : Fragment() {
                 startActivity(Intent(this.requireContext(), LoaderActivity::class.java))
             }
             else{
-                loginView.setTextErrorMessage(R.string.login_unknown_user_message.toString())
+                if (userModel?.getEmailValid() == true) {
+                    loginView.setTextErrorMessage(resources.getString(R.string.login_wrong_password_message))
+                }
             }
         }
 
@@ -99,7 +104,7 @@ class LoginFragment : Fragment() {
         var result : DataSnapshot? = null
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("users")
-        ref.child(userModel.getEmail().replace(".","")).get().addOnSuccessListener {
+        ref.child(userModel.getEmail()).get().addOnSuccessListener {
             result = it
         }
         return result

@@ -5,10 +5,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 
-class ResetPasswordModel(private var stKeyWordUser : String, private var stEmailUser : String, private var stPasswordUser : String) : UserDataModel(stEmailUser, stPasswordUser) {
+open class ResetPasswordModel(stEmail : String, stKeyWord : String, stPassword : String) : UserDataModel(stEmail, stPassword) {
+
+    protected var stKeyWordUser = stKeyWord
 
     override fun checkUserValidation(databaseUserData: DataSnapshot) {
-        userValidation = ((databaseUserData.value != null) and (databaseUserData.child("keyword").value.toString() == stKeyWordUser) )
+        setPassValid((databaseUserData.child("keyword").value.toString() == stKeyWordUser) )
     }
 
     fun checkPassword() : Boolean{
