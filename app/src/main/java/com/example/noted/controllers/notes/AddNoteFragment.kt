@@ -33,22 +33,38 @@ class AddNoteFragment : Fragment() {
 
         val viewAddNote = AddNotesView(view)
 
-        val parentNote = arguments?.getSerializable("currentNode") as noteStructure
+        var parentNote = arguments?.getSerializable("currentNode") as noteStructure?
         val dmUser = arguments?.getSerializable("userModel") as UserDataModel
-
-        viewAddNote.setParentKey(parentNote.getKey())
-
         val btnAdd = view.findViewById(R.id.add_btn_save) as Button
+
+        if (parentNote != null)
+            viewAddNote.setParentKey(parentNote.getKey())
+        else
+            viewAddNote.setParentKey(dmUser.getEmail())
+
+
 
         btnAdd.setOnClickListener{
             var databaseAuth = FirebaseAuth.getInstance()
             var database = FirebaseDatabase.getInstance()
             var user = database.reference.child(dmUser.getEmail()).child("notes")
-            for (way in parentNote.getWay()){
-                user = user.child(way)
-            }
+
+            if ( parentNote != null )
+                for (way in parentNote!!.getWay())
+                    user = user.child(way)
+
             user.child(viewAddNote.getChildKey()).child("CurrentNoteKey").setValue(viewAddNote.getChildValue())
-            parentNote.addChildrenNote(noteStructure(key = viewAddNote.getChildKey(), value = viewAddNote.getChildValue()))
+            if (parentNote != null){
+                var tmp : noteStructure = noteStructure(
+                    key = viewAddNote.getChildKey(),
+                    value = viewAddNote.getChildValue()
+                )
+                parentNote!!.addChildrenNote(tmp)
+                tmp.setParent(parentNote!! )
+            }
+            else
+                parentNote = noteStructure(viewAddNote.getChildKey(), viewAddNote.getChildValue())
+
             var fragmentToChange  = NotesFragment()
             var tmpBundle :  Bundle = Bundle()
             tmpBundle.putSerializable("userModel",dmUser)

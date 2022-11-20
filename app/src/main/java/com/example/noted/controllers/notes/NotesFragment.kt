@@ -1,12 +1,14 @@
 package com.example.noted.controllers.notes
 
 import ProductsListAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import com.example.noted.R
@@ -37,25 +39,35 @@ class NotesFragment : Fragment() {
         var currentNode : noteStructure?  = arguments?.getSerializable("nextNode") as noteStructure?
         val viewNotesView : NotesListView = NotesListView(view);
 
-        viewNotesView.setDirectoryWay(currentNode?.getKey()!!);
-        viewNotesView.startLoadingAnimation()
-
-        var adapter = ProductsListAdapter(requireContext(), currentNode.getAllChildren());
-
+        lateinit var adapter : ProductsListAdapter
         val lvNotesList : ListView = view.findViewById(R.id.notes_lv_info)
-        lvNotesList.adapter = adapter
 
-        viewNotesView.endLoadingAnimation()
+        if (currentNode != null) {
+
+            viewNotesView.setDirectoryWay(currentNode.getKey())
+            viewNotesView.startLoadingAnimation()
+            adapter = ProductsListAdapter(requireContext(), currentNode.getAllChildren());
+            lvNotesList.adapter = adapter
+            viewNotesView.endLoadingAnimation()
+
+        }else{
+            viewNotesView.setDirectoryWay(dmUser.getEmail())
+            adapter = ProductsListAdapter(requireContext(), ArrayList<noteStructure>());
+            lvNotesList.adapter = adapter
+
+        }
 
         val btnAddNewNote = view.findViewById(R.id.notes_btn_add) as Button
         val btnBack = view.findViewById(R.id.notes_btn_back) as Button
 
         btnBack.setOnClickListener{
-            if (currentNode?.getParent() == null){
-
+            if (currentNode == null || currentNode?.getParent() == null){
+                var intentToLoginActivity = Intent(this.requireContext(), LoaderActivity::class.java)
+                intentToLoginActivity.putExtra("userModel", dmUser)
+                startActivity(intentToLoginActivity)
             }
             else{
-                currentNode = currentNode?.getParent()!!
+                currentNode = currentNode?.getParent()
                 adapter.notifyDataSetChanged()
             }
         }
