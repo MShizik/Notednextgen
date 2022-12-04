@@ -22,7 +22,9 @@ class LoaderActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("users")
         ref.child(dmUser!!.getEmail()  ).child("notes").get().addOnSuccessListener {
-            getUserNotes(dmUser.getRootNote()!!, it)
+            if(it == null) return@addOnSuccessListener
+            dmUser.setRootNote(noteStructure("root","root"))
+            getUserNotes(dmUser.getRootNote()!!, it.child("root"))
         }
         val intentWorkActivity : Intent =  Intent(this, NotesActivity::class.java)
         .putExtra("userModel", dmUser)

@@ -51,25 +51,31 @@ class LoginFragment : Fragment() {
         btnLogIn.setOnClickListener {
             val preferencesUserData = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
             if((preferencesUserData.contains("email") and preferencesUserData.contains("password")))
-                userModel = UserDataModel(preferencesUserData.getString("user",loginView.getTextEmailField()).toString(), preferencesUserData.getString("password",loginView.getTextPasswordField()).toString())
+                userModel = UserDataModel(preferencesUserData.getString("user",loginView.getTextEmailField()).toString().replace(".",""), preferencesUserData.getString("password",loginView.getTextPasswordField()).toString())
 
 
-            userModel = UserDataModel(loginView.getTextEmailField(), loginView.getTextPasswordField())
+            userModel = UserDataModel(loginView.getTextEmailField().replace(".",""), loginView.getTextPasswordField())
             runBlocking {
                 val job = launch {
-                    var dsUserInfoFromDB = getUserInfo(userModel = userModel!!)
-                    if (dsUserInfoFromDB == null) {
+                    val database = FirebaseDatabase.getInstance()
+                    var ref = database.getReference();
+                    var dsUserInfoFromDB : DataSnapshot?  = null;
+
+                    dsUserInfoFromDB = ref.get().addOnSuccessListener {
+
+                    }.await().child(userModel!!.getEmail())
+
+                    System.out.println("Main: " + dsUserInfoFromDB)
+                    if (dsUserInfoFromDB?.value == null || dsUserInfoFromDB == null) {
                         userModel!!.setEmailValid(false)
                         loginView.setTextErrorMessage(resources.getString(R.string.login_unknown_user_message))
                         return@launch
                     }
                     userModel!!.setEmailValid(true)
-                    userModel!!.checkUserValidation(dsUserInfoFromDB)
+                    userModel!!.checkUserValidation(dsUserInfoFromDB!!)
                 }
                 job.join()
             }
-
-
 
             if (userModel?.getPassValid() == true){
                 if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password")))
@@ -103,10 +109,19 @@ class LoginFragment : Fragment() {
     suspend fun getUserInfo(userModel : UserDataModel) : DataSnapshot? {
         var result : DataSnapshot? = null
         val database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("users")
-        ref.child(userModel.getEmail()).get().addOnSuccessListener {
-            result = it
-        }
+        var ref = database.getReference();
+
+        ref.get().addOnSuccessListener {
+            for(childs in it.children){
+                System.out.println(childs)
+                System.out.println(childs.key == userModel.getEmail())
+                if(childs.key == userModel.getEmail()){
+                    result =  childs
+                    return@addOnSuccessListener
+                }
+            }
+        }.await()
+        System.out.println("Func: " + result);
         return result
     }
 

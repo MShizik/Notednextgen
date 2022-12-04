@@ -65,6 +65,10 @@ open class UserDataModel(stEmail : String, stPassword : String) : Serializable{
         userEmailValidation = valid
     }
 
+    fun setRootNote(rootNote : noteStructure){
+        this.noteRoot = rootNote;
+    }
+
 
 
 
