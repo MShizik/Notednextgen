@@ -3,12 +3,15 @@ package com.example.noted.controllers.notes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.noted.R
 import com.example.noted.model.auth.UserDataModel
 import com.example.noted.model.notes.noteStructure
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 class LoaderActivity : AppCompatActivity() {
@@ -16,20 +19,25 @@ class LoaderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
 
-        var dmUser : UserDataModel? = intent.extras?.getSerializable("userModel") as UserDataModel?
+        var dmUser : UserDataModel = intent.extras?.getSerializable("userModel") as UserDataModel
 
-        lateinit var result : DataSnapshot
         val database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("users")
-        ref.child(dmUser!!.getEmail()  ).child("notes").get().addOnSuccessListener {
-            if(it == null) return@addOnSuccessListener
-            dmUser.setRootNote(noteStructure("root","root"))
-            getUserNotes(dmUser.getRootNote()!!, it.child("root"))
+        var ref = database.getReference();
+
+        runBlocking {
+            val job = launch {
+                var resultOfGet = ref.child(dmUser.getEmail()).child("notes").get().addOnSuccessListener {}.await()
+                dmUser.setRootNote(noteStructure("root","root"))
+                getUserNotes(dmUser.getRootNote()!!, resultOfGet.child("root"))
+            }
+            job.join()
         }
+
         val intentWorkActivity : Intent =  Intent(this, NotesActivity::class.java)
         .putExtra("userModel", dmUser)
         startActivity(intentWorkActivity)
     }
+
 
     fun getUserNotes(rootNote : noteStructure, ref : DataSnapshot){
         for(i in ref.children){

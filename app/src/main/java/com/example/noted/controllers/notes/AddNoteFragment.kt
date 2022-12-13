@@ -49,9 +49,11 @@ class AddNoteFragment : Fragment() {
             var database = FirebaseDatabase.getInstance()
             var user = database.reference.child(dmUser.getEmail()).child("notes")
 
-            if ( parentNote != null )
+            if ( parentNote != null ) {
                 for (way in parentNote!!.getWay())
                     user = user.child(way)
+                user = user.child(parentNote!!.getKey())
+            }
 
             user.child(viewAddNote.getChildKey()).child("CurrentNoteKey").setValue(viewAddNote.getChildValue())
             if (parentNote != null){
@@ -68,7 +70,7 @@ class AddNoteFragment : Fragment() {
             var fragmentToChange  = NotesFragment()
             var tmpBundle :  Bundle = Bundle()
             tmpBundle.putSerializable("userModel",dmUser)
-            tmpBundle.putSerializable("currentNode",parentNote)
+            tmpBundle.putSerializable("nextNde",parentNote)
             fragmentToChange.arguments = tmpBundle
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.notes_fragment_holder,fragmentToChange).commit()
         }

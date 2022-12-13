@@ -54,7 +54,7 @@ class NotesFragment : Fragment() {
             viewNotesView.setDirectoryWay(dmUser.getEmail())
             adapter = ProductsListAdapter(requireContext(), ArrayList<noteStructure>());
             lvNotesList.adapter = adapter
-
+            viewNotesView.endLoadingAnimation()
         }
 
         val btnAddNewNote = view.findViewById(R.id.notes_btn_add) as Button
