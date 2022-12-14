@@ -41,8 +41,8 @@ class LoaderActivity : AppCompatActivity() {
 
     fun getUserNotes(rootNote : noteStructure, ref : DataSnapshot){
         for(i in ref.children){
-            if(i.key.toString().equals("CurrentKeyValue")) continue
-            var tmpNote : noteStructure = noteStructure(i.key.toString(),i.child("CurrentKeyValue").value.toString())
+            if(i.key.toString().equals("CurrentNoteKey")) continue
+            var tmpNote : noteStructure = noteStructure(i.key.toString(),i.child("CurrentNoteKey").value.toString())
             tmpNote.setParent(rootNote)
             rootNote.addChildrenNote(tmpNote)
             if (i.hasChildren()){

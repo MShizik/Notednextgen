@@ -82,7 +82,7 @@
         android:text="@string/add_save_button" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/add_btn_back"
         style="@style/CustomImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

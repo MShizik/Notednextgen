@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import com.example.noted.R
 import com.example.noted.model.auth.UserDataModel
 import com.example.noted.model.notes.noteStructure
@@ -36,9 +37,10 @@ class AddNoteFragment : Fragment() {
         var parentNote = arguments?.getSerializable("currentNode") as noteStructure?
         val dmUser = arguments?.getSerializable("userModel") as UserDataModel
         val btnAdd = view.findViewById(R.id.add_btn_save) as Button
+        val btnBack = view.findViewById(R.id.add_btn_back) as ImageButton
 
         if (parentNote != null)
-            viewAddNote.setParentKey(parentNote.getKey())
+            viewAddNote.setParentKey(if (parentNote.getKey() != "root")  parentNote.getKey() else resources.getString(R.string.word_user))
         else
             viewAddNote.setParentKey(dmUser.getEmail())
 
@@ -70,7 +72,16 @@ class AddNoteFragment : Fragment() {
             var fragmentToChange  = NotesFragment()
             var tmpBundle :  Bundle = Bundle()
             tmpBundle.putSerializable("userModel",dmUser)
-            tmpBundle.putSerializable("nextNde",parentNote)
+            tmpBundle.putSerializable("nextNode",parentNote)
+            fragmentToChange.arguments = tmpBundle
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.notes_fragment_holder,fragmentToChange).commit()
+        }
+
+        btnBack.setOnClickListener {
+            var fragmentToChange  = NotesFragment()
+            var tmpBundle :  Bundle = Bundle()
+            tmpBundle.putSerializable("userModel",dmUser)
+            tmpBundle.putSerializable("nextNode",parentNote)
             fragmentToChange.arguments = tmpBundle
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.notes_fragment_holder,fragmentToChange).commit()
         }
