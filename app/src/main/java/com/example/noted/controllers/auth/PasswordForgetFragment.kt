@@ -22,6 +22,10 @@ import kotlinx.coroutines.tasks.await
 
 class PasswordForgetFragment : Fragment() {
 
+    var result : DataSnapshot? = null
+    val database = FirebaseDatabase.getInstance()
+    val ref = database.reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -36,13 +40,13 @@ class PasswordForgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewForgetPassword = ForgetPasswordView(view);
+        val viewForgetPassword = ForgetPasswordView(view,requireContext());
         var userDataModel : ResetPasswordModel? = null;
 
         val btnNext : Button = view.findViewById(R.id.reset_btn_reset)
         val btnBack : AppCompatButton = view.findViewById(R.id.reset_btn_back)
 
-        var iState : Int = 0;
+        var iState = 0;
 
         btnNext.setOnClickListener {
             if(iState == 0) {
@@ -53,9 +57,9 @@ class PasswordForgetFragment : Fragment() {
                 )
                 runBlocking {
                     val job = launch {
-                        var dsUserInfoFromDB = getUserInfo(userModel = userDataModel!!)
+                        var dsUserInfoFromDB = ref.child(userDataModel!!.getEmail()).get().addOnSuccessListener {}.await()
                         if(dsUserInfoFromDB == null){
-                            viewForgetPassword.setTextErrorMessage(R.string.reset_unknown_user_message.toString())
+                            viewForgetPassword.setTextErrorMessage(resources.getString(R.string.reset_unknown_user_message))
                             return@launch
                         }
                         userDataModel!!.setEmailValid(true)
@@ -97,16 +101,6 @@ class PasswordForgetFragment : Fragment() {
             else viewForgetPassword.changeToBackStep()
 
         }
-    }
-
-    suspend fun getUserInfo(userModel : UserDataModel) : DataSnapshot {
-        lateinit var result : DataSnapshot
-        val database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("users")
-        ref.child(userModel.getEmail()).get().addOnSuccessListener {
-            result = it
-        }.await()
-        return result
     }
 
     companion object {

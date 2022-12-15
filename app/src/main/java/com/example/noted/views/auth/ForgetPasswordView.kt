@@ -1,12 +1,13 @@
 package com.example.noted.views.auth
 
+import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.noted.R
 
-class ForgetPasswordView(var rootView : View) {
+class ForgetPasswordView(var rootView : View, var context:Context) {
 
     private var tvMessage : TextView = rootView.findViewById(R.id.reset_tv_greeting)
     private var tvFirstHint : TextView = rootView.findViewById(R.id.reset_tv_email_hint)
@@ -59,33 +60,35 @@ class ForgetPasswordView(var rootView : View) {
     }
 
     fun changeToNextStep(){
-        setTextBtnNext(R.string.reset_change_button.toString())
-        setTextFirstHint(R.string.reset_password_hint.toString())
-        setTextSecondHint(R.string.reset_repeat_password_hint.toString())
-        setTextMessage(R.string.reset_greeting_message.toString())
+        setTextBtnNext(context.resources.getString(R.string.reset_change_button))
+        setTextFirstHint(context.resources.getString(R.string.reset_password_hint))
+        setTextSecondHint(context.resources.getString(R.string.reset_repeat_password_hint))
+        setTextMessage(context.resources.getString(R.string.reset_greeting_message))
+        setTextFirstField("");
+        setTextSecondField("")
     }
 
     fun changeToBackStep(){
-        setTextBtnNext(R.string.reset_next_button.toString())
-        setTextFirstHint(R.string.reset_email_hint.toString())
-        setTextSecondHint(R.string.reset_keyword_hint.toString())
-        setTextMessage(R.string.reset_greeting_message.toString())
+        setTextBtnNext(context.resources.getString(R.string.reset_next_button))
+        setTextFirstHint(context.resources.getString(R.string.reset_email_hint))
+        setTextSecondHint(context.resources.getString(R.string.reset_keyword_hint))
+        setTextMessage(context.resources.getString(R.string.reset_greeting_message))
         setTextFirstField("");
         setTextSecondField("")
     }
 
     fun showBaseErrorMessage(){
-        setTextErrorMessage(R.string.reset_base_error_message.toString())
+        setTextErrorMessage(context.resources.getString(R.string.reset_base_error_message))
         setTextFirstField("");
         setTextSecondField("")
     }
 
     fun showPasswordShortErrorMessage(){
-        setTextErrorMessage(R.string.reset_password_quality_message.toString())
+        setTextErrorMessage(context.resources.getString(R.string.reset_password_quality_message))
     }
 
     fun showPasswordMatchErrorMessage(){
-        setTextErrorMessage(R.string.reset_passwords_match_message.toString())
+        setTextErrorMessage(context.resources.getString(R.string.reset_passwords_match_message))
     }
 
 
