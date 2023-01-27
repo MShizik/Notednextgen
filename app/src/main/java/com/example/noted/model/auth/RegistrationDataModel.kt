@@ -39,8 +39,8 @@ class RegistrationDataModel(stKeyWord : String, stEmail : String, stPassword : S
         var databaseAuth = FirebaseAuth.getInstance()
         var database = FirebaseDatabase.getInstance()
         var users = database.reference
-        users.child(stEmailUser.replace(".","")).child("password").setValue(stPasswordUser)
-        users.child(stEmailUser.replace(".","")).child("keyword").setValue(stKeyWordUser)
-        users.child(stEmailUser.replace(".","")).child("notes").child("root").child("CurrentKeyValue").setValue("head");
+        users.child(stEmailUser).child("password").setValue(stPasswordUser)
+        users.child(stEmailUser).child("keyword").setValue(stKeyWordUser)
+        users.child(stEmailUser).child("notes").child("root").child("CurrentNodeValue").setValue("head");
     }
 }

@@ -23,7 +23,7 @@ import kotlinx.coroutines.tasks.await
 class LoginFragment : Fragment() {
 
     val database = FirebaseDatabase.getInstance()
-    val ref = database.getReference("users")
+    val ref = database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,55 +39,35 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var userModel : UserDataModel? = null
-        var loginView : LoginView = LoginView(view)
+        var userModel: UserDataModel?
+        var loginView  = LoginView(view)
 
         val btnLogIn : Button = view.findViewById(R.id.login_btn_login)
         val tvSignUp : TextView = view.findViewById(R.id.login_tv_signup)
         val tvResetPassword : TextView = view.findViewById(R.id.login_tv_forget_password)
 
+        val preferencesUserData = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
+        userModel = UserDataModel(preferencesUserData.getString("email","tmp").toString(), preferencesUserData.getString("password","tmp").toString())
+
 
 
         btnLogIn.setOnClickListener {
-            val preferencesUserData = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
-            if((preferencesUserData.contains("email") and preferencesUserData.contains("password")))
-                userModel = UserDataModel(preferencesUserData.getString("user",loginView.getTextEmailField()).toString().replace(".",""), preferencesUserData.getString("password",loginView.getTextPasswordField()).toString())
-
-
-            userModel = UserDataModel(loginView.getTextEmailField().replace(".",""), loginView.getTextPasswordField())
+            if (userModel!!.getEmail() == "tmp")
+                userModel = UserDataModel(loginView.getTextEmailField(), loginView.getTextPasswordField())
             runBlocking {
-                val job = launch {
-                    val database = FirebaseDatabase.getInstance()
-                    var ref = database.getReference();
-                    var dsUserInfoFromDB : DataSnapshot?  = null;
-
-                    dsUserInfoFromDB = ref.get().addOnSuccessListener {
-
-                    }.await().child(userModel!!.getEmail())
-
-                    System.out.println("Main: " + dsUserInfoFromDB)
-                    if (dsUserInfoFromDB?.value == null || dsUserInfoFromDB == null) {
-                        userModel!!.setEmailValid(false)
-                        loginView.setTextErrorMessage(resources.getString(R.string.login_unknown_user_message))
-                        return@launch
+                val job = launch{
+                    if (checkData(userModel,loginView, false)){
+                        if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password")))
+                            userModel?.saveUserData(context = requireContext())
+                        var intentToWorkActivity = Intent(requireContext(), LoaderActivity::class.java)
+                        intentToWorkActivity.putExtra("userModel", userModel)
+                        startActivity(intentToWorkActivity)
                     }
-                    userModel!!.setEmailValid(true)
-                    userModel!!.checkUserValidation(dsUserInfoFromDB!!)
+                    else{
+                        if (preferencesUserData.getString("email","").toString() == userModel!!.getEmail()) preferencesUserData.edit().clear().commit()
+                    }
                 }
                 job.join()
-            }
-
-            if (userModel?.getPassValid() == true){
-                if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password")))
-                    userModel?.saveUserData(context = requireContext())
-                var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
-                intentToWorkActivity.putExtra("userModel", userModel)
-                startActivity(intentToWorkActivity)
-            }
-            else{
-                if (userModel?.getEmailValid() == true) {
-                    loginView.setTextErrorMessage(resources.getString(R.string.login_wrong_password_message))
-                }
             }
         }
 
@@ -106,25 +86,35 @@ class LoginFragment : Fragment() {
 
     }
 
-    suspend fun getUserInfo(userModel : UserDataModel) : DataSnapshot? {
-        var result : DataSnapshot? = null
-        val database = FirebaseDatabase.getInstance()
-        var ref = database.getReference();
+    suspend fun checkData(userModel : UserDataModel?, loginView : LoginView, bPrefCheck : Boolean) : Boolean{
+        runBlocking {
+            val job = launch {
+                var dsUserInfoFromDB : DataSnapshot?
 
-        ref.get().addOnSuccessListener {
-            for(childs in it.children){
-                System.out.println(childs)
-                System.out.println(childs.key == userModel.getEmail())
-                if(childs.key == userModel.getEmail()){
-                    result =  childs
-                    return@addOnSuccessListener
+                dsUserInfoFromDB = ref.get().addOnSuccessListener { }.await().child(userModel!!.getEmail())
+
+                if (dsUserInfoFromDB.value == null) {
+
+                    userModel!!.setEmailValid(false)
+                    if (bPrefCheck) return@launch
+                    loginView.setTextErrorMessage(resources.getString(R.string.login_unknown_user_message))
+                    return@launch
                 }
+
+                userModel!!.setEmailValid(true)
+                userModel!!.checkUserValidation(dsUserInfoFromDB!!)
             }
-        }.await()
-        System.out.println("Func: " + result);
-        return result
+            job.join()
+        }
+
+        if (userModel?.getPassValid() == true){
+
+            return true
+        }
+        else
+            if (userModel?.getEmailValid() == true and !bPrefCheck)
+                loginView.setTextErrorMessage(resources.getString(R.string.login_wrong_password_message))
+        return false;
     }
-
-
 }
 

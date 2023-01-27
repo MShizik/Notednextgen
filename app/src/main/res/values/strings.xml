@@ -40,4 +40,5 @@
     <string name="add_value_hint">Content:</string>
     <string name="db_password_child" translatable="false">password</string>
     <string name="reset_base_error_message">Wrong data! Try again</string>
+    <string name="word_user">User</string>
 </resources>

@@ -11,46 +11,56 @@ import com.example.noted.R
 import com.example.noted.controllers.notes.LoaderActivity
 import com.example.noted.model.auth.RegistrationDataModel
 import com.example.noted.views.auth.RegistrationView
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class RegistrationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_registration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var userModel : RegistrationDataModel = RegistrationDataModel("","","")
+        var userModel = RegistrationDataModel(stKeyWord = "", stEmail = "", stPassword = "")
         val viewRegistration = RegistrationView(view,resources)
 
         val btnNext : Button = view.findViewById(R.id.registration_btn_next)
         val btnBack : Button = view.findViewById(R.id.registration_btn_back)
 
-        var iState : Int = 0
-        var error : Boolean = false
+        var iState = 0
+        var error = false
 
         btnNext.setOnClickListener {
             when ( iState ){
                 0->{
-                    userModel.setEmail(viewRegistration.getTextMainField())
-                    error = if ( userModel.checkEmail() ){
-                        iState++
-                        false
-                    } else true
+                    userModel.setEmail( stEmail = viewRegistration.getTextMainField())
+                    var bCheckIfUserExist = false
+                    runBlocking {
+                        val job = launch {
+                            bCheckIfUserExist = FirebaseDatabase.getInstance().reference.child(userModel.getEmail()).get().addOnSuccessListener {}.await().value != null
+                            error = if ( userModel.checkEmail() &&  !bCheckIfUserExist){
+                                iState++
+                                false
+                            } else true
+                        }
+                        job.join()
+                    }
                 }
                 1->{
-                    userModel.setKeyWord(viewRegistration.getTextMainField())
+                    userModel.setKeyWord(stKeyWord =  viewRegistration.getTextMainField())
                     error = if ( userModel.checkKeyWord() ){
                         iState++
                         false
@@ -58,7 +68,7 @@ class RegistrationFragment : Fragment() {
                 }
 
                 2->{
-                    userModel.setPassword(viewRegistration.getTextMainField())
+                    userModel.setPassword(stPassword = viewRegistration.getTextMainField())
                     error = if ( userModel.checkPassword() ){
                         iState++
                         false
@@ -66,7 +76,7 @@ class RegistrationFragment : Fragment() {
                 }
 
                 3->{
-                    if ( userModel.checkRepeatPassword(viewRegistration.getTextMainField()) ){
+                    if ( userModel.checkRepeatPassword(stRepeatedPassword = viewRegistration.getTextMainField()) ){
                         userModel.writeDataToDatabase()
                         userModel.saveUserData(requireContext())
                         var intentToWorkActivity = Intent(this.requireContext(), LoaderActivity::class.java)
@@ -77,8 +87,9 @@ class RegistrationFragment : Fragment() {
 
                 }
             }
-            viewRegistration.changeStep(iState + 1)
-            if( error ) viewRegistration.showError(101 + iState)
+            if( error ) viewRegistration.showError(iErrorID = 101 + iState)
+            else viewRegistration.changeStep(iStepCount = iState + 1)
+
         }
 
         btnBack.setOnClickListener {
@@ -97,9 +108,4 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-
-
-    companion object {
-
-    }
 }
