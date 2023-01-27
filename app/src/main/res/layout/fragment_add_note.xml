@@ -45,13 +45,13 @@
 
     <TextView
         android:id="@+id/add_tv_child_value_hint"
-        style = "@style/CustomTextViewHint"
+        style="@style/CustomTextViewHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_et_child_key"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="65dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="65dp"
         android:text="@string/add_value_hint" />
 
     <EditText
@@ -64,9 +64,9 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
-        android:minHeight="48dp"
         android:inputType="textMultiLine"
         android:maxLines="4"
+        android:minHeight="48dp"
         android:textSize="24sp"
         tools:ignore="SpeakableTextPresentCheck" />
 

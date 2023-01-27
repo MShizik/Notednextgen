@@ -1,26 +1,32 @@
 package com.example.noted.controllers.notes
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.ContactsContract
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.os.Handler
+import android.os.Looper
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.example.noted.R
 import com.example.noted.controllers.auth.AuthActivity
 import com.example.noted.model.auth.UserDataModel
 import com.example.noted.model.notes.noteStructure
-import com.example.noted.views.auth.LoginView
 import com.example.noted.views.notes.NotesListView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import java.util.jar.Attributes
+
 
 class NotesFragment : Fragment() {
 
@@ -71,6 +77,7 @@ class NotesFragment : Fragment() {
 
         btnBack.setOnClickListener{
             if (currentNode == null || currentNode?.getParent() == null){
+                requireContext().getSharedPreferences("user", 0).edit().clear().commit()
                 var intentToLoginActivity = Intent(this.requireContext(), AuthActivity::class.java)
                 startActivity(intentToLoginActivity)
             }
@@ -102,18 +109,46 @@ class NotesFragment : Fragment() {
         }
 
         lvNotesList.setOnItemLongClickListener { parent, view, position, id ->
-            var element  = currentNode!!.getAllChildren().removeAt(position)
-            var databaseAuth = FirebaseAuth.getInstance()
-            var database = FirebaseDatabase.getInstance()
-            var user = database.reference.child(dmUser.getEmail()).child("notes")
+            Handler(Looper.getMainLooper()).post {
+                val dialogDeleteFriend = Dialog(requireContext())
+                var dialogContentView : View = View.inflate(this.requireContext(), R.layout.dialog_delete_block, null);
 
-            if ( element != null ) {
-                for (way in element!!.getWay())
-                    user = user.child(way)
-                user = user.child(element!!.getKey())
+                val model = ShapeAppearanceModel()
+                    .toBuilder()
+                    .setAllCorners(CornerFamily.ROUNDED, 32.0f)
+                    .build()
+                val shape = MaterialShapeDrawable(model)
+                shape.fillColor = ContextCompat.getColorStateList(this.requireContext(), R.color.white)
+                ViewCompat.setBackground(dialogContentView, shape)
+                dialogDeleteFriend.setContentView(R.layout.dialog_delete_block)
+                dialogDeleteFriend.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                val btnDeleteAccept =
+                    dialogDeleteFriend.findViewById(R.id.dialog_delete_accept_btn) as Button
+                val btnDeclineDelete =
+                    dialogDeleteFriend.findViewById(R.id.dialog_delete_decline_btn) as Button
+
+                btnDeclineDelete.setOnClickListener {
+                    dialogDeleteFriend.cancel()
+                }
+                btnDeleteAccept.setOnClickListener {
+                    var element  = currentNode!!.getAllChildren().removeAt(position)
+                    var databaseAuth = FirebaseAuth.getInstance()
+                    var database = FirebaseDatabase.getInstance()
+                    var user = database.reference.child(dmUser.getEmail()).child("notes")
+
+                    if ( element != null ) {
+                        for (way in element!!.getWay())
+                            user = user.child(way)
+                        user = user.child(element!!.getKey())
+                    }
+                    user.setValue(null)
+                    adapter.notifyDataSetChanged()
+                    dialogDeleteFriend.cancel()
+                }
+                dialogDeleteFriend.setCancelable(true)
+                dialogDeleteFriend.show()
             }
-            user.setValue(null)
-            adapter.notifyDataSetChanged()
+
             true
         }
 
@@ -130,4 +165,5 @@ class NotesFragment : Fragment() {
             viewNotesView.endLoadingAnimation()
         }
     }
+
 }

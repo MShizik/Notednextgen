@@ -57,7 +57,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
-        android:text="Add"
+        android:text="@string/notes_add_btn"
         />
 
     <Button
@@ -70,7 +70,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
-        android:text="Back"
+        android:text="@string/notes_back_btn"
         />
 
     <ProgressBar

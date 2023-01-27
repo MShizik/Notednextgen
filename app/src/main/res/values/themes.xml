@@ -34,6 +34,7 @@
         <item name = "android:textColor">@color/text_light_theme_color</item>
         <item name = "android:textSize">24sp</item>
         <item name = "android:gravity">center_vertical|left</item>
+        <item name = "android:fontFamily">@font/comic_neue_light</item>
     </style>
 
     <style name = "CustomTextButton" parent = "Widget.MaterialComponents.Button.TextButton">
@@ -72,6 +73,11 @@
 
     <style name="customProgressBarStyle">
         <item name = "android:background">@color/transparent</item>
+    </style>
+
+    <style name="ThemeDialogCustom" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
 </resources>

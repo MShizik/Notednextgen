@@ -49,7 +49,11 @@ class LoginFragment : Fragment() {
         val preferencesUserData = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
         userModel = UserDataModel(preferencesUserData.getString("email","tmp").toString(), preferencesUserData.getString("password","tmp").toString())
 
-
+        if(userModel.getEmail() != "tmp"){
+            var intentToWorkActivity = Intent(requireContext(), LoaderActivity::class.java)
+            intentToWorkActivity.putExtra("userModel", userModel)
+            startActivity(intentToWorkActivity)
+        }
 
         btnLogIn.setOnClickListener {
             if (userModel!!.getEmail() == "tmp")
@@ -87,6 +91,7 @@ class LoginFragment : Fragment() {
     }
 
     suspend fun checkData(userModel : UserDataModel?, loginView : LoginView, bPrefCheck : Boolean) : Boolean{
+        System.out.print("Fuck");
         runBlocking {
             val job = launch {
                 var dsUserInfoFromDB : DataSnapshot?
@@ -106,7 +111,6 @@ class LoginFragment : Fragment() {
             }
             job.join()
         }
-
         if (userModel?.getPassValid() == true){
 
             return true

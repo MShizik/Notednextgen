@@ -40,4 +40,9 @@
     <string name="add_value_hint">Содержание:</string>
     <string name="reset_base_error_message">Неправильные данные</string>
     <string name="word_user">Пользователь</string>
+    <string name="notes_add_btn">Добавить</string>
+    <string name="notes_back_btn">Назад</string>
+    <string name="dialog_accept_btn">Да</string>
+    <string name="dialog_decline_btn">Нет</string>
+    <string name="dialog_delete_question_text">Вы хотите удалить эту ветку?</string>
 </resources>
