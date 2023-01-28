@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.widget.addTextChangedListener
@@ -74,6 +75,18 @@ class NotesFragment : Fragment() {
 
         val btnAddNewNote = view.findViewById(R.id.notes_btn_add) as Button
         val btnBack = view.findViewById(R.id.notes_btn_back) as Button
+        val tvDirectory = view.findViewById<TextView>(R.id.notes_tv_directory_name)
+
+
+        tvDirectory.setOnClickListener{
+            if (currentNode == null || currentNode?.getParent() == null) return@setOnClickListener
+            var fragmentToChange  = ChangeNoteFragment()
+            var tmpBundle :  Bundle = Bundle()
+            tmpBundle.putSerializable("userModel",dmUser)
+            tmpBundle.putSerializable("currentNode",currentNode)
+            fragmentToChange.arguments = tmpBundle
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.notes_fragment_holder,fragmentToChange).commit()
+        }
 
         btnBack.setOnClickListener{
             if (currentNode == null || currentNode?.getParent() == null){

@@ -5,8 +5,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.example.noted.R
 
-class AddNotesView(var rootView : View) {
-
+class ChangeNoteView (var rootView : View) {
     var tvParentKey : TextView = rootView.findViewById(R.id.add_tv_parent_key)
     var tvChildKeyHint : TextView = rootView.findViewById(R.id.add_tv_child_key_hint)
     var tvChildValueHint : TextView = rootView.findViewById(R.id.add_tv_child_value_hint)
@@ -34,5 +33,4 @@ class AddNotesView(var rootView : View) {
     fun getChildValue() : String{
         return etChildValue.text.toString()
     }
-
 }

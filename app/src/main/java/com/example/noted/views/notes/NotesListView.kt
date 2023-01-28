@@ -22,7 +22,7 @@ class NotesListView(var rootView : View) {
     }
 
     fun setDirectoryWay( way : String){
-        tvDirectory.text = way
+        tvDirectory.text = way.takeIf { way.length <= 20 } ?: (way.substring(0, 16) + "...")
     }
 
     fun setStartPosition(){
